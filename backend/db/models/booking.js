@@ -18,7 +18,16 @@ module.exports = (sequelize, DataTypes) => {
     spotId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE
+    endDate: {
+      type: DataTypes.DATE,
+      validate: {
+        checkDate(value) {
+          if (value < this.startDate) {
+            throw new Error('endDate cannot come before startDate')
+          }
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Booking',
