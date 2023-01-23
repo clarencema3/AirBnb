@@ -22,7 +22,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users'
-        }
+        },
+        onDelete: "CASCADE"
       },
       startDate: {
         type: Sequelize.DATE
