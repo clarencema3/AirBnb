@@ -102,4 +102,44 @@ router.get('/current', requireAuth, async(req, res) => {
     })
 });
 
+router.get('/:spotId', async(req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId, {
+        include: [
+            { model: SpotImage, attributes: ['id', 'url', 'preview'] },
+            { model: User }
+        ]
+    });
+
+    const reviews = await Review.count({
+        where: {
+            spotId: req.params.spotId
+        }
+    })
+    
+    const average = await Review.findAll({
+        where: {
+            spotId: req.params.spotId
+        },
+        attributes: [
+            [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
+        ]
+    })
+    
+    const spotObj = spot.toJSON();
+    
+    if (!spotObj) {
+        res.status(404);
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+    spotObj.Owner = spotObj.User;
+    delete spotObj.User;
+    spotObj.avgStarRating = Number(average[0].dataValues.avgRating);
+    spotObj.numReviews = reviews;
+    
+    res.json(spotObj)
+})
+
 module.exports = router;
