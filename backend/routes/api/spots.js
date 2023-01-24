@@ -83,7 +83,7 @@ router.get('/current', requireAuth, async(req, res) => {
                 [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
             ]
         })
-        spot.avgRating = average[0].dataValues.avgRating;
+        spot.avgRating = Number(average[0].dataValues.avgRating);
         delete spot.Reviews;
 
         spot.SpotImages.forEach(image => {
