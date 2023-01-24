@@ -110,6 +110,13 @@ router.get('/:spotId', async(req, res) => {
         ]
     });
 
+    if (!spot) {
+        res.status(404);
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
     const reviews = await Review.count({
         where: {
             spotId: req.params.spotId
@@ -127,13 +134,6 @@ router.get('/:spotId', async(req, res) => {
     
     const spotObj = spot.toJSON();
     
-    if (!spotObj) {
-        res.status(404);
-        res.json({
-            message: "Spot couldn't be found",
-            statusCode: 404
-        })
-    }
     spotObj.Owner = spotObj.User;
     delete spotObj.User;
     spotObj.avgStarRating = Number(average[0].dataValues.avgRating);
