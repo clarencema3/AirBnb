@@ -32,7 +32,7 @@ module.exports = {
         lat: 40.7645358,
         lng: 122.4730327,
         name: 'Encore',
-        description: 'something something shots',
+        description: 'something something',
         price: 123,
       },
       {
