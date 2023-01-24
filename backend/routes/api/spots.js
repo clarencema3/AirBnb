@@ -3,7 +3,6 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, SpotImage, Review, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const spot = require('../../db/models/spot');
 const router = express.Router();
 
 const validateLogin = [
@@ -36,12 +35,9 @@ router.get('/', async (req, res) => {
             where: {
                 spotId: spot.id
             },
-            attributes: {
-                include: [
-                    [ sequelize.fn('AVG', sequelize.col('stars')), 'avgRating' ]
-                ],
-                group: ['Review.id']
-            }
+            attributes: [
+                [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
+            ]
         })
         spot.avgRating = average[0].dataValues.avgRating;
         delete spot.Reviews;
