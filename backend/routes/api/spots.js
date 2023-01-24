@@ -45,9 +45,7 @@ router.get('/', async (req, res) => {
         })
         spot.avgRating = average[0].dataValues.avgRating;
         delete spot.Reviews;
-    }
-    
-    spotList.forEach(spot => {
+
         spot.SpotImages.forEach(image => {
             if (image.preview === true) {
                 spot.previewImage = image.url
@@ -57,7 +55,8 @@ router.get('/', async (req, res) => {
             }
             delete spot.SpotImages;
         })
-    })
+    }
+    
     res.json(spotList)
 });
 
