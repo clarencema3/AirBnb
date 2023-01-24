@@ -20,6 +20,11 @@ module.exports = {
         spotId: 2,
         url: "https://unsplash.com/photos/nWMcDsDAxu0",
         preview: false
+      },
+      {
+        spotId: 3,
+        url: "google.com",
+        preview: true
       }
     ], {})
   },
@@ -28,7 +33,7 @@ module.exports = {
     options.tableName = "SpotImages";
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ["https://unsplash.com/photos/bSpVH5V0YX8", "https://unsplash.com/photos/nWMcDsDAxu0"]}
+      url: { [Op.in]: ["https://unsplash.com/photos/bSpVH5V0YX8", "https://unsplash.com/photos/nWMcDsDAxu0", "google.com"]}
     }, {});
   }
 };
