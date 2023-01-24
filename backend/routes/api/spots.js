@@ -56,8 +56,5 @@ router.get('/', async (req, res) => {
     res.json(spotList)
 });
 
-router.get('/current', requireAuth, async(req, res) => {
-    
-})
 
 module.exports = router;
