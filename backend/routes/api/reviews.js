@@ -44,9 +44,9 @@ router.get('/current', requireAuth, async(req, res) => {
                 review.Spot.previewImage = image.url
             } 
         })
-    }
+    };
 
-    res.json({Reviews})
+    res.json({Reviews});
 });
 
 //Add an image to a review based on the review's id
@@ -61,7 +61,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
             message: 'Review couldn\'t be found',
             statusCode: 404
         })
-    }
+    };
 
     if (userId !== review.userId) {
         res.status(403);
@@ -69,20 +69,20 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
             message: 'Forbidden',
             statusCode: 403
         })
-    }
+    };
 
     if (!url) {
         res.status(400);
         return res.json({
             message: 'Please provide a url to the image you want to create'
         })
-    }
+    };
 
     const reviewImageCount = await ReviewImage.count({
         where: {
             reviewId: review.id
         }
-    })
+    });
 
     if (reviewImageCount >= 10) {
         res.status(403);
@@ -90,17 +90,17 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
             message: 'Maximum number of images for this resource was reached',
             statusCode: 403
         })
-    }
+    };
 
     const newImage = await ReviewImage.create({
         url,
         reviewId: review.id
-    })
+    });
 
     res.json({
         id: newImage.id,
         url: newImage.url
-    })
+    });
 });
 
 //Edit a review
@@ -115,7 +115,7 @@ router.put('/:reviewId', [requireAuth, validateReviewRequestBody], async(req, re
             message: 'Review couldn\'t be found',
             statusCode: 404
         })
-    }
+    };
 
     if (userId !== currentReview.userId) {
         res.status(403);
@@ -130,7 +130,35 @@ router.put('/:reviewId', [requireAuth, validateReviewRequestBody], async(req, re
         stars
     });
 
-    res.json(currentReview)
+    res.json(currentReview);
+});
+
+//Delete a review
+router.delete('/:reviewId', requireAuth, async(req, res) => {
+    const userId = req.user.id;
+    const review = await Review.findByPk(req.params.reviewId);
+
+    if (!review) {
+        res.status(404);
+        return res.json({
+            message: 'Review couldn\'t be found',
+            statusCode: 404
+        })
+    };
+
+    if (userId !== review.userId) {
+        res.status(403);
+        return res.json({
+            message: 'Forbidden',
+            statusCode: 403
+        })
+    };
+
+    review.destroy();
+    res.json({
+        message: 'Successfully deleted',
+        statusCode: 200
+    });
 });
 
 module.exports = router;
