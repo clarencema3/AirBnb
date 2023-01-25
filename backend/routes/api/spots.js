@@ -3,6 +3,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, SpotImage, Review, sequelize, User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors, createSpotValidationErrors } = require('../../utils/validation');
+const spot = require('../../db/models/spot');
 const router = express.Router();
 
 const validateLogin = [
@@ -197,6 +198,35 @@ router.post('/', [requireAuth, validateRequestBody], async(req, res) => {
     }
 });
 
+router.post('/:spotId/images', requireAuth, async(req, res) => {
+    const user = req.user;
+    const { url, preview } = req.body;
+    const spot = await Spot.findOne({
+        where: {
+            id: req.params.spotId,
+            ownerId: user.id
+        }
+    });
+    if (!spot) {
+        res.status(404);
+        res.json({
+            message: 'Spot couldn\'t be found',
+            statusCode: 404
+        })
+    }
+    const newImage = await SpotImage.create({
+        url,
+        preview,
+        spotId: spot.id
+    })
+    if (newImage) {
+        res.send({
+            "id": newImage.id,
+            "url": newImage.url,
+            "preview": newImage.preview
+        })
+    }
+})
 
 
 module.exports = router;
