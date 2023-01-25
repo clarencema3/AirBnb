@@ -2,8 +2,18 @@ const express = require('express');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, ReviewImage, Review, User } = require('../../db/models');
 const { check } = require('express-validator');
-const { handleValidationErrors, createSpotValidationErrors } = require('../../utils/validation');
+const { createReviewValidationErrors } = require('../../utils/validation');
 const router = express.Router();
+
+const validateReviewRequestBody = [
+    check('review')
+      .exists({ checkFalsy: true })
+      .withMessage('Review text is required'),
+    check('stars')
+      .exists({ checkFalsy: true })
+      .withMessage('Stars must be an integer from 1 to 5'),
+    createReviewValidationErrors
+];
 
 //Get all reviews of the current user
 router.get('/current', requireAuth, async(req, res) => {
@@ -91,6 +101,36 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
         id: newImage.id,
         url: newImage.url
     })
-})
+});
+
+//Edit a review
+router.put('/:reviewId', [requireAuth, validateReviewRequestBody], async(req, res) => {
+    const userId = req.user.id;
+    const currentReview = await Review.findByPk(req.params.reviewId);
+    const { review, stars } = req.body;
+
+    if (!currentReview) {
+        res.status(404);
+        return res.json({
+            message: 'Review couldn\'t be found',
+            statusCode: 404
+        })
+    }
+
+    if (userId !== currentReview.userId) {
+        res.status(403);
+        return res.json({
+            message: 'Forbidden',
+            statusCode: 403
+        })
+    };
+
+    currentReview.update({
+        review,
+        stars
+    });
+
+    res.json(currentReview)
+});
 
 module.exports = router;
