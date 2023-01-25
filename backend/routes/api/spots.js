@@ -1,6 +1,6 @@
 const express = require('express');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Spot, SpotImage, Review, ReviewImage, User } = require('../../db/models');
+const { Spot, SpotImage, Review, ReviewImage, User, Booking } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors, createSpotValidationErrors, createReviewValidationErrors } = require('../../utils/validation');
 const spot = require('../../db/models/spot');
@@ -133,6 +133,50 @@ router.get('/current', requireAuth, async(req, res) => {
         Spots: spotList
     })
 });
+
+//Get all bookings for a spot based on the spot's id
+router.get('/:spotId/bookings', requireAuth, async(req, res) => {
+    const userId = req.user.id;
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        res.status(404);
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    };
+
+    if (userId !== spot.ownerId) {
+        const bookings = await Booking.findAll({
+            where: {
+                spotId: spot.id
+            },
+            attributes: ['spotId', 'startDate', 'endDate']
+        })
+        const Bookings = [];
+        for (let booking of bookings) {
+            Bookings.push(booking.toJSON())
+        }
+        return res.json({Bookings})
+    }
+
+    if (userId === spot.ownerId) {
+        const bookings = await Booking.findAll({
+            where: {
+                spotId: spot.id,
+            },
+            include: [
+                { model: User, attributes: ['id', 'firstName', 'lastName'] }
+            ]
+        })
+        const Bookings = [];
+        for (let booking of bookings) {
+            Bookings.push(booking.toJSON())
+        }
+        res.json({Bookings})
+    }
+})
 
 //Get all reviews by spot's id
 router.get('/:spotId/reviews', async(req, res) => {
