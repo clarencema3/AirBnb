@@ -260,7 +260,7 @@ router.post('/:spotId/reviews', [requireAuth, validateReviewRequestBody], async(
         review,
         stars,
         spotId: spot.id,
-        ownerId: user.id
+        userId: user.id
     })
     res.status(201);
     res.json(newReview)
