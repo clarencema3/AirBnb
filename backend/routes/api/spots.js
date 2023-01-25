@@ -200,14 +200,19 @@ router.post('/', [requireAuth, validateRequestBody], async(req, res) => {
 
 //Add an image to a spot based on spot's id
 router.post('/:spotId/images', requireAuth, async(req, res) => {
-    const user = req.user;
+    const userId = req.user.id;
     const { url, preview } = req.body;
-    const spot = await Spot.findOne({
-        where: {
-            id: req.params.spotId,
-            ownerId: user.id
-        }
-    });
+    const spot = await Spot.findByPk(req.params.spotId);
+    const ownerId = spot.ownerId;
+
+    if (userId !== ownerId) {
+        res.status(403);
+        res.json({
+            message: 'Forbidden',
+            statusCode: 403
+        })
+    }
+
     if (!spot) {
         res.status(404);
         res.json({
@@ -215,11 +220,13 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
             statusCode: 404
         })
     }
+
     const newImage = await SpotImage.create({
         url,
         preview,
         spotId: spot.id
     })
+
     if (newImage) {
         res.send({
             "id": newImage.id,
@@ -231,9 +238,18 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
 
 //Edit a Spot
 router.put('/:spotId', [requireAuth, validateRequestBody], async(req, res) => {
-    const user = req.user;
+    const userId = req.user.id;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     const spot = await Spot.findByPk(req.params.spotId);
+    const ownerId = spot.ownerId;
+    if (userId !== ownerId) {
+        res.status(403);
+        res.json({
+            message: 'Forbidden',
+            statusCode: 403
+        })
+    }
+
     if (!spot) {
       res.status(404);
       res.json({
