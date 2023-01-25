@@ -2,22 +2,21 @@ const express = require('express');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, SpotImage, Review, ReviewImage, User } = require('../../db/models');
 const { check } = require('express-validator');
-const { handleValidationErrors, createSpotValidationErrors } = require('../../utils/validation');
+const { handleValidationErrors, createSpotValidationErrors, createReviewValidationErrors } = require('../../utils/validation');
 const spot = require('../../db/models/spot');
 const router = express.Router();
 
-const validateLogin = [
-    check('credential')
+const validateReviewRequestBody = [
+    check('review')
       .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('Please provide a valid email or username.'),
-    check('password')
+      .withMessage('Review text is required'),
+    check('stars')
       .exists({ checkFalsy: true })
-      .withMessage('Please provide a password.'),
-    handleValidationErrors
+      .withMessage('Stars must be an integer from 1 to 5'),
+    createReviewValidationErrors
 ];
 
-const validateRequestBody = [
+const validateSpotRequestBody = [
     check('address')
       .exists({ checkFalsy: true })
       .withMessage('Street address is required'),
@@ -208,7 +207,7 @@ router.get('/:spotId', async(req, res) => {
 });
 
 //Create a spot
-router.post('/', [requireAuth, validateRequestBody], async(req, res) => {
+router.post('/', [requireAuth, validateSpotRequestBody], async(req, res) => {
     const user = req.user;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     if (user) {
@@ -228,6 +227,44 @@ router.post('/', [requireAuth, validateRequestBody], async(req, res) => {
         res.json(newSpot);
     }
 });
+
+//Create a review for a spot based on spot's id
+router.post('/:spotId/reviews', [requireAuth, validateReviewRequestBody], async(req, res) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (!spot) {
+        res.status(404);
+        return res.json({
+            message: 'Spot couldn\'t be found',
+            statusCode: 404
+        })
+    }
+    
+    const user = req.user;
+    const existingReviews = await Review.findAll({
+        where: {
+            spotId: spot.id,
+        }
+    })
+    for (let review of existingReviews) {
+        if (review.dataValues.userId === user.id) {
+            res.status(403);
+            return res.json({
+                message: 'User already has a review for this spot',
+                statusCode: 403
+            })
+        }
+    }
+
+    const { review, stars } = req.body;
+    const newReview = await Review.create({
+        review,
+        stars,
+        spotId: spot.id,
+        ownerId: user.id
+    })
+    res.status(201);
+    res.json(newReview)
+})
 
 //Add an image to a spot based on spot's id
 router.post('/:spotId/images', requireAuth, async(req, res) => {
@@ -268,7 +305,7 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
 });
 
 //Edit a Spot
-router.put('/:spotId', [requireAuth, validateRequestBody], async(req, res) => {
+router.put('/:spotId', [requireAuth, validateSpotRequestBody], async(req, res) => {
     const userId = req.user.id;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     const spot = await Spot.findByPk(req.params.spotId);
