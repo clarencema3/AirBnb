@@ -13,12 +13,20 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         reviewId: 1,
-        url: "https://unsplash.com/photos/NR2eMg9zXxA"
+        url: "image.url"
       },
       {
         reviewId: 2,
-        url: "https://unsplash.com/photos/_v1BQFRWko8"
-      }
+        url: "image.url"
+      },
+      {
+        reviewId: 3,
+        url: "image.url"
+      },
+      {
+        reviewId: 4,
+        url: "image.url"
+      },
     ], {});
   },
 
