@@ -5,6 +5,8 @@ const { check } = require('express-validator');
 const { handleValidationErrors, createSpotValidationErrors, createReviewValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+
+//Get all of the current user's bookings
 router.get('/current', requireAuth, async(req, res) => {
     const userId = req.user.id;
     const bookings = await Booking.findAll({
