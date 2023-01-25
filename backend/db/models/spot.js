@@ -35,8 +35,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    lat: DataTypes.DECIMAL(9, 7),
-    lng: DataTypes.DECIMAL(10, 7),
+    lat: {
+      type: DataTypes.DECIMAL(9, 7),
+      validate: {
+        isNumeric: true
+      }
+    },
+    lng: {
+      type: DataTypes.DECIMAL(10, 7),
+      validate: {
+        isNumeric: true
+      }
+    },
     name: DataTypes.STRING(50),
     description: {
       type: DataTypes.STRING,
