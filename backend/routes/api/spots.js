@@ -198,6 +198,7 @@ router.post('/', [requireAuth, validateRequestBody], async(req, res) => {
     }
 });
 
+//Add an image to a spot based on spot's id
 router.post('/:spotId/images', requireAuth, async(req, res) => {
     const user = req.user;
     const { url, preview } = req.body;
@@ -226,6 +227,32 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
             "preview": newImage.preview
         })
     }
+});
+
+//Edit a Spot
+router.put('/:spotId', [requireAuth, validateRequestBody], async(req, res) => {
+    const user = req.user;
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (!spot) {
+      res.status(404);
+      res.json({
+         message: 'Spot couldn\'t be found',
+         statusCode: 404
+      })
+    }
+    spot.update({
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+    })
+    res.json(spot);
 })
 
 
