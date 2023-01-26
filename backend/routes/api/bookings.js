@@ -123,6 +123,48 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
     });
 
     return res.json(booking)
+});
+
+router.delete('/:bookingId', requireAuth, async(req, res) => {
+    const userId = req.user.id;
+    const currentDate = Date.now();
+    const booking = await Booking.findByPk(req.params.bookingId, {
+        include: [
+            { model: Spot }
+        ]
+    });
+
+    if (!booking) {
+        res.status(404);
+        return res.json({
+            message: 'Booking couldn\'t be found',
+            statusCode: 404
+        })
+    };
+
+    if (currentDate > booking.startDate && currentDate < booking.endDate) {
+        res.status(403);
+        return res.json({
+            message: 'Bookings that have been started can\'t be deleted',
+            statusCode: 403
+        })
+    }
+
+    if (userId === booking.userId || userId === booking.Spot.ownerId) {
+        booking.destroy();
+        res.status(200)
+        return res.json({
+            message: 'Successfully deleted',
+            statusCode: 200
+        })
+    };
+    
+    res.status(403);
+    res.json({
+        message: 'Forbidden',
+        statusCode: 403
+    })
+
 })
 
 module.exports = router;
