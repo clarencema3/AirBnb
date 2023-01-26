@@ -24,19 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     endDate: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        checkDate(value) {
-          const endDateStr = value.toDateString();
-          const startDateStr = this.startDate.toDateString();
-          const startDateTime = startDateStr.getTime();
-          const endDateTime = endDateStr.getTime();
-          if (startDateTime > endDateTime) {
-            throw new Error('Start date must be before the ending date')
-          }
-
-        }
-      }
+      allowNull: false
     }
   }, {
     sequelize,

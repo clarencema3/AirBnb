@@ -44,4 +44,85 @@ router.get('/current', requireAuth, async(req, res) => {
     res.json({Bookings})
 });
 
+router.put('/:bookingId', requireAuth, async(req, res) => {
+    const userId = req.user.id;
+    const booking = await Booking.findByPk(req.params.bookingId);
+    const { startDate, endDate } = req.body;
+    const startDateObj = new Date(startDate.toString());
+    const endDateObj = new Date(endDate.toString())
+    const startTime = startDateObj.getTime();
+    const endTime = endDateObj.getTime();
+    
+    if (!booking) {
+        res.status(404);
+        return res.json({
+            message: 'Booking couldn\'t be found',
+            statusCode: 404
+        })
+    }
+    
+    if (userId !== booking.userId) {
+        res.status(403);
+        return res.json({
+            message: 'Forbidden',
+            statusCode: 403
+        })
+    };
+
+    if (startTime > endTime) {
+        res.status(400);
+        return res.json({
+            message: 'Validation error',
+            statusCode: 400,
+            errors: {
+                endDate: 'endDate cannot come before startDate'
+            }
+        })
+    }
+    
+    const currentStartStr = booking.startDate.toDateString();
+    const currentEndStr = booking.endDate.toDateString();
+    const currentStartDateObj = new Date(currentStartStr);
+    const currentEndDateObj = new Date(currentEndStr);
+    const currentStartTime = currentStartDateObj.getTime();
+    const currentEndTime = currentEndDateObj.getTime();
+
+    if (currentEndTime < startTime) {
+        res.status(403);
+        return res.json({
+            message: 'Past bookings can\'t be modified',
+            statusCode: 403
+        })
+    }
+
+    if (startTime > currentStartTime && startTime < currentEndTime) {
+        res.status(403);
+        return res.json({
+            message: 'Sorry, this spot is already booked for the specified dates',
+            statusCode: 403,
+            errors: {
+                startDate: 'Start date conflicts with an existing booking'
+            }
+        })
+    }
+
+    if (endTime < currentEndTime && endTime > currentStartTime) {
+        res.status(403);
+        return res.json({
+            message: 'Sorry, this spot is already booked for the specified dates',
+            statusCode: 403,
+            errors: {
+                endDate: 'End date conflicts with an existing booking'
+            }
+        })
+    }
+
+    booking.update({
+        startDate,
+        endDate
+    });
+
+    return res.json(booking)
+})
+
 module.exports = router;

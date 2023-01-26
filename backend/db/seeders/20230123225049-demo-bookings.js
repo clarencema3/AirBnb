@@ -34,7 +34,13 @@ module.exports = {
       endDate: new Date('2024-01-30'),
       userId: 2,
       spotId: 2
-     }
+     },
+     {
+      startDate: new Date('2000-01-01'),
+      endDate: new Date('2000-01-30'),
+      userId: 2,
+      spotId: 2
+     },
    ], {});
    
   },
