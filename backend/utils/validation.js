@@ -60,8 +60,29 @@ const createReviewValidationErrors = (req, _res, next) => {
   next();
 }
 
+const createQueryValidationErrors = (req, _res, next) => {
+  const validationErrors = validationResult(req);
+
+  if (!validationErrors.isEmpty()) {
+    
+    const errorsObj = {};
+    const errors = validationErrors
+      .array()
+    for (let error of errors) {
+      errorsObj[`${error.param}`] = `${error.msg}`
+    }
+    
+    const err = new Error('Validation Error');
+    err.status = 400;
+    err.errors = errorsObj;
+    next(err)
+  }
+  next();
+}
+
 module.exports = {
   handleValidationErrors,
   createSpotValidationErrors,
-  createReviewValidationErrors
+  createReviewValidationErrors,
+  createQueryValidationErrors
 };
