@@ -2,7 +2,7 @@ const express = require('express');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, SpotImage, Review, ReviewImage, User, Booking, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
-const { handleValidationErrors, createSpotValidationErrors, createReviewValidationErrors } = require('../../utils/validation');
+const { createQueryValidationErrors, createSpotValidationErrors, createReviewValidationErrors } = require('../../utils/validation');
 const spot = require('../../db/models/spot');
 const router = express.Router();
 
@@ -48,21 +48,71 @@ const validateSpotRequestBody = [
     createSpotValidationErrors
 ];
 
+const validateQueryParams = [
+    check('page')
+      .optional()
+      .isInt({ min: 1, max: 10 })
+      .withMessage('Page must be greater than or equal to 1 and less than 10'),
+    check('size')
+      .optional()
+      .isInt( { min: 1, max: 20 })
+      .withMessage('Size must be greater than or equal to 1 and less than 20'),
+    check('maxLat')
+      .optional()
+      .isFloat()
+      .withMessage('Maximum latitude is invalid'),
+    check('minLat')
+      .optional()
+      .isFloat()
+      .withMessage('Minimum latitude is invalid'),
+    check('minLng')
+      .optional()
+      .isFloat()
+      .withMessage('Minimum longitude is invalid'),
+    check('minPrice')
+      .optional()
+      .isFloat( { min: 0 })
+      .withMessage('Maximum price must be greater than or equal to 0'),
+    check('maxPrice')
+      .optional()
+      .isFloat( { min: 0 })
+      .withMessage('Minimum price must be greater than or equal to 0'),
+    createQueryValidationErrors
+]
+
 //Get All Spots
-router.get('/', async (req, res) => {
-    const spots = await Spot.findAll({
+router.get('/', validateQueryParams, async (req, res) => {
+   
+    let pagination = {};
+    let { page, size, maxLat, minLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+
+    page = parseInt(page);
+    size = parseInt(size);
+    
+    if (!page) page = 1;
+    if (!size) size = 20;
+
+    pagination.limit = size;
+    pagination.offset = size * (page - 1);
+
+    const result = {}
+    result.Spots = await Spot.findAll({
         include: [
             { model: SpotImage },
             { model: Review }
-        ]
+        ],
+        ...pagination
     });
 
-    const spotList = [];
-    for (let spot of spots) {
-        spotList.push(spot.toJSON())
+    result.page = page;
+    result.size = size;
+    
+    const spotsList = [];
+    for (let spot of result.Spots) {
+        spotsList.push(spot.toJSON())
     }
-
-    for (let spot of spotList) {
+    
+    for (let spot of spotsList) {
         const average = await Review.findAll({
             where: {
                 spotId: spot.id
@@ -71,21 +121,28 @@ router.get('/', async (req, res) => {
                 [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']
             ]
         })
+
         spot.avgRating = Number(average[0].dataValues.avgRating);
         delete spot.Reviews;
 
         spot.SpotImages.forEach(image => {
             if (image.preview === true) {
-                spot.previewImage = image.url
+                spot.SpotImages = image.url
             }
             if (image.preview === false) {
-                spot.previewImage = 'no url available'
+                spot.SpotImages = 'no preview available'
             }
-            delete spot.SpotImages;
         })
+
+        spot.previewImage = spot.SpotImages
+        delete spot.SpotImages
     }
-    
-    res.json(spotList)
+
+    for (let i = 0; i < result.Spots.length; i++) {
+        result.Spots[i] = spotsList[i]
+    }
+
+    res.json(result)
 });
 
 //Get all spots owned by the current user
