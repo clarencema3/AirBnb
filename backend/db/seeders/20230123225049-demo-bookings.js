@@ -36,10 +36,16 @@ module.exports = {
       spotId: 2
      },
      {
-      startDate: new Date('2000-01-01'),
-      endDate: new Date('2000-01-30'),
+      startDate: new Date('2023-01-01'),
+      endDate: new Date('2023-04-30'),
       userId: 2,
       spotId: 2
+     },
+     {
+      startDate: new Date('2025-01-01'),
+      endDate: new Date('2025-04-30'),
+      userId: 4,
+      spotId: 4
      },
    ], {});
    
