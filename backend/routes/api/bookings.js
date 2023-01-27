@@ -47,12 +47,6 @@ router.get('/current', requireAuth, async(req, res) => {
 router.put('/:bookingId', requireAuth, async(req, res) => {
     const userId = req.user.id;
     const booking = await Booking.findByPk(req.params.bookingId);
-    const { startDate, endDate } = req.body;
-    const startDateObj = new Date(startDate.toString());
-    const endDateObj = new Date(endDate.toString())
-    const startTime = startDateObj.getTime();
-    const endTime = endDateObj.getTime();
-    console.log(booking)
     if (!booking) {
         res.status(404);
         return res.json({
@@ -60,6 +54,12 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
             statusCode: 404
         })
     }
+    const { startDate, endDate } = req.body;
+    const startDateObj = new Date(startDate.toString());
+    const endDateObj = new Date(endDate.toString())
+    const startTime = startDateObj.getTime();
+    const endTime = endDateObj.getTime();
+    console.log(booking)
     
     if (userId !== booking.userId) {
         res.status(403);
