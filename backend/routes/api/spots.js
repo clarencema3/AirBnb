@@ -73,11 +73,11 @@ const validateQueryParams = [
     check('minPrice')
       .optional()
       .isFloat( { min: 0 })
-      .withMessage('Maximum price must be greater than or equal to 0'),
+      .withMessage('Minimum price must be greater than or equal to 0'),
     check('maxPrice')
       .optional()
       .isFloat( { min: 0 })
-      .withMessage('Minimum price must be greater than or equal to 0'),
+      .withMessage('Maximum price must be greater than or equal to 0'),
     createQueryValidationErrors
 ]
 
