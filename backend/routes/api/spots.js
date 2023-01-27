@@ -5,6 +5,7 @@ const { check } = require('express-validator');
 const { createQueryValidationErrors, createSpotValidationErrors, createReviewValidationErrors } = require('../../utils/validation');
 const spot = require('../../db/models/spot');
 const router = express.Router();
+const { Op } = require('sequelize');
 
 const validateReviewRequestBody = [
     check('review')
@@ -82,10 +83,27 @@ const validateQueryParams = [
 
 //Get All Spots
 router.get('/', validateQueryParams, async (req, res) => {
-   
+    let where = {};
     let pagination = {};
     let { page, size, maxLat, minLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-
+    if (maxLat) {
+        where.lat = { [Op.gte]: maxLat }
+    }
+    if (minLat) {
+        where.lat = { [Op.gte]: minLat }
+    }
+    if (minLng) {
+        where.lng = { [Op.gte]: minLng }
+    }
+    if (maxLng) {
+        where.lng = { [Op.lte]: maxLng }
+    }
+    if (minPrice) {
+        where.price = { [Op.gte]: minPrice }
+    }
+    if (maxPrice) {
+        where.price = { [Op.lte]: maxPrice }
+    }
     page = parseInt(page);
     size = parseInt(size);
     
@@ -101,6 +119,7 @@ router.get('/', validateQueryParams, async (req, res) => {
             { model: SpotImage },
             { model: Review }
         ],
+        where: where,
         ...pagination
     });
 
