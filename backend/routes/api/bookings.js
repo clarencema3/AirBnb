@@ -52,7 +52,7 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
     const endDateObj = new Date(endDate.toString())
     const startTime = startDateObj.getTime();
     const endTime = endDateObj.getTime();
-    
+    console.log(booking)
     if (!booking) {
         res.status(404);
         return res.json({
@@ -95,7 +95,9 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
         })
     }
 
-    if (startTime > currentStartTime && startTime < currentEndTime) {
+    if ((startTime >= currentStartTime && startTime <= currentEndTime) || 
+            startTime === currentStartTime || 
+            startTime === currentEndTime) {
         res.status(403);
         return res.json({
             message: 'Sorry, this spot is already booked for the specified dates',
@@ -106,7 +108,9 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
         })
     }
 
-    if (endTime < currentEndTime && endTime > currentStartTime) {
+    if ((endTime <= currentEndTime && endTime >= currentStartTime) ||
+            endTime === currentStartTime ||
+            endTime === currentEndTime) {
         res.status(403);
         return res.json({
             message: 'Sorry, this spot is already booked for the specified dates',
