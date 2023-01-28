@@ -1,8 +1,6 @@
 const express = require('express');
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Spot, SpotImage, Review, ReviewImage, User, Booking } = require('../../db/models');
-const { check } = require('express-validator');
-const { handleValidationErrors, createSpotValidationErrors, createReviewValidationErrors } = require('../../utils/validation');
+const { requireAuth } = require('../../utils/auth');
+const { Review, ReviewImage } = require('../../db/models');
 const router = express.Router();
 
 router.delete('/:imageId', requireAuth, async(req, res) => {
