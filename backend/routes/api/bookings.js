@@ -42,15 +42,13 @@ router.get('/current', requireAuth, async(req, res) => {
     res.json({Bookings})
 });
 
-router.put('/:bookingId', requireAuth, async(req, res) => {
+router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const userId = req.user.id;
     const booking = await Booking.findByPk(req.params.bookingId);
     if (!booking) {
-        res.status(404);
-        return res.json({
-            message: 'Booking couldn\'t be found',
-            statusCode: 404
-        })
+        const err = Error("Booking couldn't be found");
+        err.status = 404;
+        next(err);
     }
     const { startDate, endDate } = req.body;
     const startDateObj = new Date(startDate.toString());
@@ -60,11 +58,9 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
     console.log(booking)
     
     if (userId !== booking.userId) {
-        res.status(403);
-        return res.json({
-            message: 'Forbidden',
-            statusCode: 403
-        })
+        const err = Error("Forbidden");
+        err.status = 403;
+        next(err);
     };
 
     if (startTime > endTime) {
@@ -127,7 +123,7 @@ router.put('/:bookingId', requireAuth, async(req, res) => {
     return res.json(booking)
 });
 
-router.delete('/:bookingId', requireAuth, async(req, res) => {
+router.delete('/:bookingId', requireAuth, async(req, res, next) => {
     const userId = req.user.id;
     const currentDate = Date.now();
     const booking = await Booking.findByPk(req.params.bookingId, {
@@ -137,11 +133,9 @@ router.delete('/:bookingId', requireAuth, async(req, res) => {
     });
 
     if (!booking) {
-        res.status(404);
-        return res.json({
-            message: 'Booking couldn\'t be found',
-            statusCode: 404
-        })
+        const err = Error("Booking couldn't be found");
+        err.status = 404;
+        next(err);
     };
 
     if (currentDate > booking.startDate && currentDate < booking.endDate) {
