@@ -66,9 +66,9 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
   res.json({
-    title: err.title || 'Server Error',
     message: err.message,
     errors: err.errors,
+    statusCode: err.status,
     stack: isProduction ? null : err.stack
   });
 });
