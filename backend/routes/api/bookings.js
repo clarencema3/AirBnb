@@ -55,7 +55,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next) => {
     const endDateObj = new Date(endDate.toString())
     const startTime = startDateObj.getTime();
     const endTime = endDateObj.getTime();
-    console.log(booking)
+    
     
     if (userId !== booking.userId) {
         const err = Error("Forbidden");
