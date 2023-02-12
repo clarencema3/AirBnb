@@ -1,0 +1,73 @@
+.login-modal {
+    list-style: none;
+    padding: 5px;
+    font-size: 14pt;
+    cursor: pointer;
+    background-color: white;
+    width: 80%;
+}
+
+.signup-modal {
+    list-style: none;
+    padding: 5px;
+    font-size: 14pt;
+    cursor: pointer;
+    background-color: white;
+    width: fit-content;
+}
+
+.profile-dropdown {
+    position: absolute;
+    right:40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    border: 2px solid black;
+    margin-top: 5px;
+    list-style-type: none;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.icon-button {
+  cursor: pointer;
+  padding: 10px;
+  background-color: white;
+  border-radius: 30px;
+  font-size: 25px;
+}
+
+.logout-button {
+    cursor: pointer;
+    border: 2px solid black;
+    border-radius: 20px;
+    height: 40px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #999999;
+    color: white;
+}
+
+.menu__container {
+    padding: 10px;
+    
+}
+
+.menu__items {
+    font-size: 14pt;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px;
+    width: fit-content;
+}
+
+.logout-button__container {
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid black;
+    padding-top: 5px;
+}

@@ -1,9 +1,7 @@
 .loginform__container {
-    border: 1px solid black;
-    border-radius: 5%;
     box-sizing: border-box;
-    width: 30vw;
-    height: 50vh;
+    width: 50vw;
+    height: 40vh;
 }
 
 .loginform {
@@ -11,37 +9,29 @@
     align-content: center;
     justify-content: center;
     flex-direction: column;
-    padding: 30px;
 }
 
 .logintext {
     display: flex;
     justify-content: center;
     font-weight: bold;
-    font-size: 24px;
-    margin-top: 0;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
 }
 
 .loginError {
     color: red;
     font-weight: bold;
+    list-style: none;
 }
 
-.credentialField {
-    padding: 10px;
+.field {
+    width: 90%;
+    padding: 2px;
 }
 
-.credentialField__input {
-    border: 2px solid black;
-    background-color: rgb(217, 237, 243);
-    width: 95%;
-}
-
-.passwordField {
-    padding: 10px;
-}
-
-.passwordField__input {
+.field__input {
     border: 2px solid black;
     background-color: rgb(217, 237, 243);
     width: 95%;
@@ -50,13 +40,48 @@
 .login__submit__container {
     display: flex;
     justify-content: center;
-    padding: 5px;
+    width: 97%;
+    padding-top: 10px;
 }
 
 .login__submit {
-    width: 95%;
-    background-color: rgb(247, 89, 89);
+    width: 90%;
+    background-color: #FF5A5F;
     color: white;
-    padding: 10px;
-    box-shadow: 2px 2px black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 0;
+    box-shadow: 3px 3px black;
+    cursor: pointer;
+}
+
+.field__container {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.demologin__container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.demologin__button {
+    border: none;
+    background-color: inherit;
+    font-size: 14pt;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #00525E;
+    font-weight: bold;
+}
+
+button:disabled,
+button[disabled] {
+    background-color: white;
+    color: #CCCCCC;
+    cursor: not-allowed;
+    box-shadow: 3px 3px #999999;
 }
