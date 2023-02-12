@@ -1,6 +1,6 @@
 .signup__container {
     width: 50vw;
-    height: 80vw;
+    height: 55vw;
 }
 
 .signup-text {
@@ -66,4 +66,5 @@ button[disabled] {
     background-color: #CCCCCC;
     cursor: not-allowed;
     box-shadow: 3px 3px #999999;
+    color: white;
 }
