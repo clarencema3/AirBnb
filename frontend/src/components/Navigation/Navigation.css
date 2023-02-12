@@ -1,3 +1,39 @@
 .hidden {
     display: none;
 }
+
+.nav-container {
+    width: 100vw;
+    border-bottom: 2px solid #CCCCCC;
+    margin: auto;
+
+}
+
+.nav-items {
+    display: inline-flex;
+    width: 95%;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.nav-name {
+    list-style: none;
+    display: inline;
+    color: #FF5A5F;
+    font-size: 24pt;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-profile {
+    list-style: none;
+    display: inline;
+}
+
+.logo-image {
+    display: inline;
+    height: 40px;
+    width: 40px;
+}
+
+
