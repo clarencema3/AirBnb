@@ -2,21 +2,24 @@ import './SpotIndexItem.css';
 
 export default function SpotIndexItem({ spot }) {
     return (
-        <div>
-            <ul className="spot-ul">
-                <li className='spot-li'>
-                    <img src={spot.previewImage} alt='demo-image' className="image"></img>
-                </li>
-                <li className='spot-li'>
+        <ul className="spot-ul">
+            <li>
+                <img src={spot.previewImage} alt='demo-image' className="image"></img>
+            </li>
+            <div className='spot__text__row1'>
+                <li className='spot-location'>
                     {spot.city}, {spot.state}
                 </li>
-                <li className='spot-li'>
-                    {spot.avgRating}
+                <li className='spot-rating'>
+                    <i className="fa-solid fa-star"></i> {spot.avgRating.toFixed(1)}
                 </li>
-                <li className='spot-li'>
-                    {spot.price}
+            </div>
+            <div className='spot__text__row2'>
+                <li className='spot-price'>
+                    ${spot.price.toFixed(2)}
                 </li>
-            </ul>
-        </div>
+                <p>night</p>
+            </div>
+        </ul>
     )
 }

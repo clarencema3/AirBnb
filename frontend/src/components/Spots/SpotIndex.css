@@ -1,0 +1,13 @@
+.spots-container {
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.spot-tile {
+    cursor: pointer;
+    list-style: none;
+}
+
+
+
