@@ -1,3 +1,116 @@
+.single__spot__container {
+    width: 100vw;
+}
 .spot__name {
+    font-size: 24pt;
+    font-weight: bold;
+    margin: 40px;
+}
+
+.spot__location {
+    font-size: 14pt;
+    margin: 40px;
+}
+
+.spot__images__container {
+    display: flex;
+    width: 100%;
+}
+
+.spot__images {
+    height: 412px;
+    width: 50%;
     
 }
+
+.spot__images__list {
+    list-style: none;
+}
+
+.description__price__container {
+    margin: 40px;
+    display: flex;
+}
+
+.information {
+    display: inline;
+    width: 65%;
+    position: relative;
+    bottom: 35px;
+}
+
+.owner {
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+.description {
+    font-size: 14pt;
+}
+
+.price__section {
+    border: 2px solid black;
+    width: fit-content;
+    height: 150px;
+    border-radius: 15px;
+}
+
+.price__info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-right: 60px;
+    padding-left: 30px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.price {
+    font-size: 18pt;
+    font-weight: bold;
+    
+}
+
+.night {
+    font-size: 14pt;
+    position: relative;
+    top: 9px;
+    left: 5px;
+}
+
+.stars {
+    display: flex;
+    flex-direction: row;
+    font-size: 14pt;
+    position: relative;
+    top: 9px;
+    left: 20px;
+}
+
+.reviews {
+    display: flex;
+    flex-direction: row;
+    font-size: 14pt;
+    position: relative;
+    top: 9px;
+    left: 30px;
+}
+
+.reserve__button__container {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.reserve__button {
+    padding: 10px;
+    font-size: 14pt;
+    cursor: pointer;
+    width: 90%;
+    border: 2px solid black;
+    box-shadow: 1px 1px black;
+    background-color: #FF5A5F;
+    color: white;
+    box-sizing: border-box;
+}
+
