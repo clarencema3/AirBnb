@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchSpots } from '../../store/spots';
 import { useEffect } from 'react';
 import SpotIndexItem from './SpotIndexItem';
+import './SpotIndexItem.css';
 
 export default function SpotsIndex() {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export default function SpotsIndex() {
             <ul>
                 {spots.map(spot => {
                     return (
-                        <li>
+                        <li className='spot-li'>
                             <SpotIndexItem spot={spot} />
                         </li>
                     )
