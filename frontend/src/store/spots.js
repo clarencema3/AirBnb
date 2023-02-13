@@ -22,6 +22,7 @@ export const fetchSingleSpot = (spotId) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(getSingleSpot(data))
+        return data
     }
 }
 
@@ -40,6 +41,7 @@ const initialState = { allSpots: {}, singleSpot: {} };
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_SINGLE_SPOT:
+            console.log('action', action)
             return {...state, allSpots: {...state.allSpots} ,singleSpot: {...state.spot, ...action.spot}}
         case GET_SPOTS:
             return {...state, allSpots: {...state.allSpots, ...action.spots} }
