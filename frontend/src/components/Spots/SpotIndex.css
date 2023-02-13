@@ -1,0 +1,8 @@
+.spots-container {
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+

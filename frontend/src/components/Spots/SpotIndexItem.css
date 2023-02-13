@@ -1,12 +1,37 @@
 .image {
-    height: 270px;
-    width: 250px;
+    height: 250px;
+    width: 270px;
 }
 
 .spot-ul {
-    list-style: none;
+    list-style: none; 
+    flex-basis: 25%;
+    box-sizing: border-box;
 }
 
-.spot-li {
-    list-style: none;
+.spot-location {
+    font-size: 14pt;
+}
+
+
+.spot__text__row1>.spot-rating {
+    position: relative;
+    bottom: 21px;
+    left: 220px;
+}
+
+.spot-rating {
+    font-size: 14pt;
+}
+
+.spot-price {
+    font-size:14pt;
+    font-weight: bold;
+}
+
+.spot__text__row2 p {
+    position: relative;
+    bottom: 41px;
+    left: 65px;
+    font-size: 14pt;
 }
