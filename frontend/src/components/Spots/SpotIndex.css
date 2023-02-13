@@ -4,5 +4,10 @@
     flex-wrap: wrap;
 }
 
+.spot-tile {
+    cursor: pointer;
+    list-style: none;
+}
+
 
 
