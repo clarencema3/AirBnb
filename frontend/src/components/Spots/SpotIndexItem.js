@@ -3,6 +3,8 @@ import './SpotIndexItem.css';
 export default function SpotIndexItem({ spot }) {
     const priceNum = Number(spot.price);
     const price = priceNum.toFixed(2)
+    const avgRatingNum = Number(spot.avgRating)
+    const avgRating = avgRatingNum.toFixed(2)
     if (!price) return null;
     return (
         <ul className="spot-ul">
@@ -14,7 +16,7 @@ export default function SpotIndexItem({ spot }) {
                     {spot.city}, {spot.state}
                 </li>
                 <li className='spot-rating'>
-                    <i className="fa-solid fa-star"></i> {spot.avgRating === 0 ? 'New' : spot.avgRating.toFixed(1)}
+                    <i className="fa-solid fa-star"></i> {avgRating === 0 ? 'New' : avgRating}
                 </li>
             </div>
             <div className='spot__text__row2'>
