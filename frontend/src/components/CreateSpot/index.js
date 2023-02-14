@@ -11,7 +11,6 @@ function CreateSpot() {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [img, setImg] = useState([]);
-    const [validations, setValidations] = useState([]);
 
     
 
