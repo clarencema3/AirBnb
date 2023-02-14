@@ -17,9 +17,11 @@ export default function SpotIndexItem({ spot }) {
             </div>
             <div className='spot__text__row2'>
                 <li className='spot-price'>
-                    {`$${spot.price.toFixed(2)}`}
+                    ${spot.price.toFixed(2)}
                 </li>
-                <p>night</p>
+                <li>
+                    <p>night</p>
+                </li>
             </div>
         </ul>
     )

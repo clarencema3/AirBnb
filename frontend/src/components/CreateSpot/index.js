@@ -11,7 +11,9 @@ function CreateSpot() {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [img, setImg] = useState([]);
+    const [validations, setValidations] = useState({});
 
+    
     
 
     return (
@@ -28,6 +30,7 @@ function CreateSpot() {
                 <label>
                     Country
                     <input 
+                    required
                     placeholder='Country'
                     className='country__input'
                     type='text'
@@ -40,6 +43,7 @@ function CreateSpot() {
                 <label>
                     Street Address
                     <input
+                    required
                     placeholder='Address'
                     className='address__input'
                     type='text'
@@ -52,6 +56,7 @@ function CreateSpot() {
                 <label>
                     City
                     <input
+                    required
                     placeholder='City'
                     className='city__input'
                     type='text'
@@ -63,6 +68,7 @@ function CreateSpot() {
                 <label>
                     State
                     <input
+                    required
                     placeholder='STATE'
                     className='state__input'
                     type='text'
