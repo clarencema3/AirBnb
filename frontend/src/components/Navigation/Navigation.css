@@ -36,4 +36,21 @@
     width: 40px;
 }
 
+.right-nav {
+    display: flex;
+    
+}
 
+.create-spot {
+    display: flex;
+    font-size: 14pt;
+    list-style: none;
+    cursor: pointer;
+    align-items: center;
+    padding: 10px;
+}
+
+.create-link {
+    color: #00525E;
+    text-decoration: none;
+}
