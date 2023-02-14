@@ -1,7 +1,8 @@
 import './SpotIndexItem.css';
 
 export default function SpotIndexItem({ spot }) {
-    
+    const price = spot.price.toFixed(2);
+    if (!price) return null
     return (
         <ul className="spot-ul">
             <li>
@@ -17,7 +18,7 @@ export default function SpotIndexItem({ spot }) {
             </div>
             <div className='spot__text__row2'>
                 <li className='spot-price'>
-                    ${spot.price.toFixed(2)}
+                    ${price}
                 </li>
                 <li>
                     <p>night</p>
