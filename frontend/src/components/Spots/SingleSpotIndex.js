@@ -16,6 +16,10 @@ export default function SingleSpotIndex() {
     
     if (!images) return null;
 
+    function showMessage() {
+        window.alert('Feature coming soon')
+    }
+
     return (
         <div className="single__spot__container">
             <div className="spot__name">
@@ -48,14 +52,15 @@ export default function SingleSpotIndex() {
                     <div className="price__info">
                         <p className="price">${spotObj.price.toFixed(2)}</p>
                         <p className="night">night</p>
-                        <p className="stars"><i className="fa-solid fa-star"></i> {spotObj.avgStarRating.toFixed(1)}</p>
-                        <p className="reviews">{spotObj.numReviews} reviews</p>
+                        <p className="stars"><i className="fa-solid fa-star"></i> {spotObj.avgStarRating === 0 ? 'New' : spotObj.avgStarRating.toFixed(1)}</p>
+                        <p className="reviews">{spotObj.numReviews === 0 ? '' : `${spotObj.numReviews} review(s)`} </p>
                     </div>
                     <div className="reserve__button__container">
-                        <button className="reserve__button">Reserve</button>
+                        <button onClick={showMessage} className="reserve__button">Reserve</button>
                     </div>
                 </div>
             </div>
         </div>
     )
 }
+//{spot.avgRating === 0 ? 'New' :spot.avgRating.toFixed(1)}

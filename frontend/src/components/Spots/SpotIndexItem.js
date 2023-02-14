@@ -1,6 +1,7 @@
 import './SpotIndexItem.css';
 
 export default function SpotIndexItem({ spot }) {
+    
     return (
         <ul className="spot-ul">
             <li>
@@ -11,7 +12,7 @@ export default function SpotIndexItem({ spot }) {
                     {spot.city}, {spot.state}
                 </li>
                 <li className='spot-rating'>
-                    <i className="fa-solid fa-star"></i> {spot.avgRating.toFixed(1)}
+                    <i className="fa-solid fa-star"></i> {spot.avgRating === 0 ? 'New' :spot.avgRating.toFixed(1)}
                 </li>
             </div>
             <div className='spot__text__row2'>

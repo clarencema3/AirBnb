@@ -1,6 +1,7 @@
 .image {
     height: 250px;
     width: 270px;
+    object-fit: cover;
 }
 
 .spot-ul {
@@ -17,7 +18,7 @@
 .spot__text__row1>.spot-rating {
     position: relative;
     bottom: 21px;
-    left: 220px;
+    left: 210px;
 }
 
 .spot-rating {

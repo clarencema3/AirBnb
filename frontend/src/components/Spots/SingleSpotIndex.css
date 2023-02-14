@@ -20,7 +20,7 @@
 .spot__images {
     height: 412px;
     width: 50%;
-    
+    object-fit: cover;
 }
 
 .spot__images__list {
