@@ -1,8 +1,9 @@
 import './SpotIndexItem.css';
 
 export default function SpotIndexItem({ spot }) {
-    const price = spot.price.toFixed(2);
-    if (!price) return null
+    const priceNum = Number(spot.price);
+    const price = priceNum.toFixed(2)
+    if (!price) return null;
     return (
         <ul className="spot-ul">
             <li>

@@ -15,6 +15,7 @@ export default function SpotsIndex() {
         dispatch(fetchSpots())
     }, [dispatch])
 
+    
     const handleClick = (spotId) => {
         history.push(`/spots/${spotId}`)
     }

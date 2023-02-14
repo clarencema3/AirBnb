@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function CreateSpot() {
     const [country, setCountry] = useState('');
@@ -10,15 +10,59 @@ function CreateSpot() {
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
-    const [img, setImg] = useState([]);
+    const [previewImg, setPreviewImg] = useState('');
+    const [img2, setImg2] = useState('');
+    const [img3, setImg3] = useState('');
+    const [img4, setImg4] = useState('');
+    const [img5, setImg5] = useState('');
     const [validations, setValidations] = useState({});
 
-    
-    
+    function isImage(url) {
+        return /\.(jpg|jpeg|png)$/.test(url);
+    }
+
+    const validate = () => {
+        const errors = {};
+        if (!country) errors.country = 'Country is required';
+        if (!address) errors.address = 'Address is required';
+        if (!city) errors.city = 'City is required';
+        if (!state) errors.state = 'State is required';
+        if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
+        if (!title) errors.title = 'Name is required';
+        if (!price) errors.price = 'Price is required';
+        if (!previewImg) errors.previewImg = 'Preview image is required'
+        if (isImage(previewImg) === false || 
+            isImage(img2) === false || 
+            isImage(img3) === false || isImage(img4) || 
+            isImage(img5)) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
+        setValidations(errors);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        validate();
+
+        const newSpot = {
+            country,
+            city,
+            address,
+            state,
+            lat: lat || '100',
+            lng: lng || '100',
+            description,
+            title,
+            price,
+            previewImg
+
+        }
+        
+    }
+    // useEffect(() => {
+    // }, [country, address, city, state, description, title, price, previewImg, img2, img3, img4, img5])
 
     return (
        <div className='form__container'>
-        <form>
+        <form onSubmit={onSubmit}>
             <div className='title'>
                 <h1>Create a new Spot</h1>
             </div>
@@ -28,9 +72,8 @@ function CreateSpot() {
             </div>
             <div className='country__container'>
                 <label>
-                    Country
+                    Country {validations.country && (<span>{validations.country}</span>)}
                     <input 
-                    required
                     placeholder='Country'
                     className='country__input'
                     type='text'
@@ -41,9 +84,8 @@ function CreateSpot() {
             </div>
             <div className='address__container'>
                 <label>
-                    Street Address
+                    Street Address {validations.address && (<span>{validations.address}</span>)}
                     <input
-                    required
                     placeholder='Address'
                     className='address__input'
                     type='text'
@@ -54,9 +96,8 @@ function CreateSpot() {
             </div>
             <div className='location__container'>
                 <label>
-                    City
+                    City {validations.city && (<span>{validations.city}</span>)}
                     <input
-                    required
                     placeholder='City'
                     className='city__input'
                     type='text'
@@ -66,9 +107,8 @@ function CreateSpot() {
                      ,
                 </label>
                 <label>
-                    State
+                    State {validations.state && (<span>{validations.state}</span>)}
                     <input
-                    required
                     placeholder='STATE'
                     className='state__input'
                     type='text'
@@ -79,7 +119,7 @@ function CreateSpot() {
             </div>
             <div className='coordinate__container'>
                 <label>
-                    Latitude
+                    Latitude 
                     <input
                     placeholder='Latitude'
                     className='latitude__input'
@@ -111,6 +151,7 @@ function CreateSpot() {
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                     ></textarea>
+                    {validations.description && (<p>{validations.description}</p>)}
                 </div>
             </div>
             <div className='title__container'>
@@ -125,6 +166,7 @@ function CreateSpot() {
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                     />
+                    {validations.title && (<p>{validations.title}</p>)}
                 </div>
             </div>
             <div className='price__container'>
@@ -139,6 +181,7 @@ function CreateSpot() {
                     value={price}
                     onChange={e => setPrice(e.target.value)}
                     />
+                    {validations.price && (<p>{validations.price}</p>)}
                 </div>
             </div>
             <div className='url__container'>
@@ -150,40 +193,42 @@ function CreateSpot() {
                     <input
                     placeholder='Preview Image URL'
                     type='url'
-                    value={img}
-                    onChange={e => setImg([...img, e.target.value])}
+                    value={previewImg}
+                    onChange={e => setPreviewImg(e.target.value)}
+                    />
+                    {validations.previewImg && (<p>{validations.previewImg}</p>)}
+                </div>
+                <div className='url__input'>
+                    <input
+                    placeholder='Image URL'
+                    type='url'
+                    value={img2}
+                    onChange={e => setImg2(e.target.value)}
+                    />
+                    {validations.image && (<p>{validations.image}</p>)}
+                </div>
+                <div className='url__input'>
+                    <input
+                    placeholder='Image URL'
+                    type='url'
+                    value={img3}
+                    onChange={e => setImg3(e.target.value)}
                     />
                 </div>
                 <div className='url__input'>
                     <input
-                    placeholder='Preview Image URL'
+                    placeholder='Image URL'
                     type='url'
-                    value={img}
-                    onChange={e => setImg([...img, e.target.value])}
+                    value={img4}
+                    onChange={e => setImg4(e.target.value)}
                     />
                 </div>
                 <div className='url__input'>
                     <input
-                    placeholder='Preview Image URL'
+                    placeholder='Image URL'
                     type='url'
-                    value={img}
-                    onChange={e => setImg([...img, e.target.value])}
-                    />
-                </div>
-                <div className='url__input'>
-                    <input
-                    placeholder='Preview Image URL'
-                    type='url'
-                    value={img}
-                    onChange={e => setImg([...img, e.target.value])}
-                    />
-                </div>
-                <div className='url__input'>
-                    <input
-                    placeholder='Preview Image URL'
-                    type='url'
-                    value={img}
-                    onChange={e => setImg([...img, e.target.value])}
+                    value={img5}
+                    onChange={e => setImg5(e.target.value)}
                     />
                 </div>
             </div>
