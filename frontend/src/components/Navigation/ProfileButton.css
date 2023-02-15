@@ -71,3 +71,13 @@
     border-top: 2px solid black;
     padding-top: 5px;
 }
+
+.manage__link {
+    text-decoration: none;
+    font-size: 14pt;
+    color: black;
+}
+
+.manage__container {
+    border-top: 2px solid black;
+}

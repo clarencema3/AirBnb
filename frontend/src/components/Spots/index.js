@@ -24,9 +24,9 @@ export default function SpotsIndex() {
         <div className='spots-container'>
             {spots.map(spot => {
                 return (
-                    <li className='spot-tile' key={spot.id} onClick={() => handleClick(spot.id)}>
+                    <div className='spot-tile' key={spot.id} onClick={() => handleClick(spot.id)}>
                         <SpotIndexItem spot={spot} />
-                    </li>
+                    </div>
                 )
             })}
         </div>
