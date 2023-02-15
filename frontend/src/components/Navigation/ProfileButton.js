@@ -5,6 +5,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './ProfileButton.css'
+import { NavLink } from 'react-router-dom'; 
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -53,6 +54,9 @@ function ProfileButton({ user }) {
               <div className="menu__items">
                 <li>Hello, {user.firstName}</li>
                 <li>{user.email}</li>
+              </div>
+              <div className="manage__container">
+                <NavLink className='manage__link' to='/spots/current'>Manage Spots</NavLink>
               </div>
                 <div className="logout-button__container">
                   <li>

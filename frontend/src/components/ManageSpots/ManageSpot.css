@@ -1,0 +1,54 @@
+.image {
+    height: 250px;
+    width: 270px;
+    object-fit: cover;
+}
+
+.spot-ul {
+    list-style: none; 
+    flex-basis: 25%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 10px;
+}
+
+.spot-location {
+    font-size: 14pt;
+}
+
+
+.spot__text__row1>.spot-rating {
+    position: relative;
+    bottom: 21px;
+    left: 210px;
+}
+
+.spot-rating {
+    font-size: 14pt;
+}
+
+.spot-price {
+    font-size:14pt;
+    font-weight: bold;
+}
+
+.spot__text__row2 p {
+    position: relative;
+    bottom: 41px;
+    left: 65px;
+    font-size: 14pt;
+}
+
+.spots-container {
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.spot-tile {
+    cursor: pointer;
+    list-style: none;
+    flex-basis: 25%;
+    box-sizing: border-box;
+    padding: 5px;
+}

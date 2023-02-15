@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { createSpot, getSingleSpot } from '../../store/spots';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function CreateSpot() {
+    const history = useHistory();
+    const dispatch = useDispatch();
     const [country, setCountry] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -16,6 +21,7 @@ function CreateSpot() {
     const [img4, setImg4] = useState('');
     const [img5, setImg5] = useState('');
     const [validations, setValidations] = useState({});
+    
 
     function isImage(url) {
         return /\.(jpg|jpeg|png)$/.test(url);
@@ -32,34 +38,92 @@ function CreateSpot() {
         if (!price) errors.price = 'Price is required';
         if (!previewImg) errors.previewImg = 'Preview image is required'
         if (isImage(previewImg) === false || 
-            isImage(img2) === false || 
-            isImage(img3) === false || isImage(img4) || 
-            isImage(img5)) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
+        isImage(img2) === false || 
+        isImage(img3) === false || isImage(img4) || 
+        isImage(img5)) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
         setValidations(errors);
     }
-
-    const onSubmit = (e) => {
+    
+    const onSubmit = async (e) => {
         e.preventDefault();
         validate();
 
-        const newSpot = {
-            country,
-            city,
-            address,
-            state,
-            lat: lat || '100',
-            lng: lng || '100',
-            description,
-            title,
-            price,
-            previewImg
-
+        if (validations.length) {
+            setValidations({})
         }
         
-    }
-    // useEffect(() => {
-    // }, [country, address, city, state, description, title, price, previewImg, img2, img3, img4, img5])
+        const newSpotObj = {
+            country: country,
+            city: city,
+            address: address,
+            state: state,
+            lat: lat || '100',
+            lng: lng || '100',
+            description: description,
+            name: title,
+            price: price
+        }
 
+        const imageList = [];
+        const newImage = {
+            url: previewImg,
+            preview: true
+        }
+
+        imageList.push(newImage)
+        if (img2) {
+            const secondImage = {
+                url: img2,
+                preview: false
+            }
+            imageList.push(secondImage)
+        }
+        if (img3) {
+            const secondImage = {
+                url: img3,
+                preview: false
+            }
+            imageList.push(secondImage)
+        }
+        if (img4) {
+            const secondImage = {
+                url: img4,
+                preview: false
+            }
+            imageList.push(secondImage)
+        }
+        if (img5) {
+            const secondImage = {
+                url: img5,
+                preview: false
+            }
+            imageList.push(secondImage)
+        }
+
+        setPrice('');
+        setTitle('');
+        setAddress('');
+        setCity('');
+        setCountry('');
+        setState('');
+        setLat('');
+        setLng('');
+        setDescription('');
+        setPreviewImg('');
+        setImg2('');
+        setImg3('');
+        setImg4('');
+        setImg5('');
+
+        const createdSpot = await dispatch(createSpot(newSpotObj, imageList))
+        if (createdSpot) {
+            history.push(`/spots/${createdSpot.id}`)
+        }
+    }
+    
+
+    
+    
     return (
        <div className='form__container'>
         <form onSubmit={onSubmit}>

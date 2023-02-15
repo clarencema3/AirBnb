@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_SPOTS = 'spots/all';
 const GET_SINGLE_SPOT = 'spot/spotId';
 const ADD_SPOT = 'spots/add';
+const USER_SPOTS = 'user/spots'
 
 export const getSpots = (spots) => {
     return {
@@ -25,18 +26,25 @@ export const addSpot = (spot) => {
     }
 }
 
-export const createSpot = (spot) => async(dispatch) => {
-    const {
-        address,
-        city,
-        state,
-        country,
-        lat,
-        lng,
-        name,
-        description,
-        price
-    } = spot;
+export const userSpots = (spots) => {
+    return {
+        type: USER_SPOTS,
+        spots
+    }
+}
+
+export const getUserSpots = () => async(dispatch) => {
+    const response = await csrfFetch('api/spots/current');
+    if (response.ok) {
+        const spots = response.json();
+        dispatch(userSpots(spots));
+        return spots
+    }
+}
+
+export const createSpot = (spot, images) => async(dispatch) => {
+    const { address, city, state, country, lat, lng, name, description, price } = spot;
+    //get the response from fetching the spot first
     const response = await csrfFetch('/api/spots', {
         method: 'POST',
         headers: {
@@ -47,17 +55,38 @@ export const createSpot = (spot) => async(dispatch) => {
             city,
             state,
             country,
-            lat,
+            lat,                  
             lng,
             name,
             description,
             price
         })
     });
-
+    //if we are able to find the spot
     if (response.ok) {
+        //we want to turn into into a json object
         const spot = await response.json();
-        dispatch(addSpot(spot));
+        //now we loop through the images array that we passed in through the dispatch
+        //for every image object in that array, we want to fetch that image
+        spot['SpotImages'] = [];
+        for (let i = 0; i < images.length; i++) {
+            let nextResponse = await csrfFetch(`/api/spots/${spot.id}/images`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(images[i])
+            })
+            //if the response is ok from the fetch
+            if (nextResponse.ok) {
+                //we want to attach that image object to the property called SpotImages(array)
+                let singleImage = await nextResponse.json();
+                spot.SpotImages.push(singleImage)
+            }
+        }
+        //once we are done with the loop, we can dispatch the spot
+        // dispatch(addSpot(spot))
+        dispatch(getSingleSpot(spot.id))
         return spot
     }
 }
@@ -81,12 +110,17 @@ export const fetchSpots = () => async (dispatch) => {
     }
 }
 
-const initialState = { allSpots: {}, singleSpot: {} };
+const initialState = { allSpots: {}, singleSpot: {}, userSpots: {} };
 
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case USER_SPOTS:
+            return {...state, userSpots: {...state.userSpots, ...action.spots}}
         case ADD_SPOT:
-            return {...state, allSpots: {...state.allSpots, ...action.spot}}
+            const newState = {...state, allSpots: {...state.allSpots, ...action.spot}, singleSpot: {...state.spot, ...action.spot} }
+            newState.allSpots['previewImage'] = newState.allSpots.SpotImages[0].url;
+            delete newState.allSpots.SpotImages
+            return newState
         case GET_SINGLE_SPOT:
             return {...state, allSpots: {...state.allSpots} ,singleSpot: {...state.spot, ...action.spot}}
         case GET_SPOTS:
