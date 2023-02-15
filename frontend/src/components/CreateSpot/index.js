@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { createSpot, getSingleSpot } from '../../store/spots';
+import React, { useState } from 'react';
+import { createSpot } from '../../store/spots';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -57,8 +57,8 @@ function CreateSpot() {
             city: city,
             address: address,
             state: state,
-            lat: lat || '100',
-            lng: lng || '100',
+            lat: lat || 100,
+            lng: lng || 100,
             description: description,
             name: title,
             price: price
@@ -120,9 +120,6 @@ function CreateSpot() {
             history.push(`/spots/${createdSpot.id}`)
         }
     }
-    
-
-    
     
     return (
        <div className='form__container'>

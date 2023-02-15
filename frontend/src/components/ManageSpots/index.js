@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getUserSpots } from "../../store/spots";
 import { useSelector, useDispatch } from "react-redux";
-import CreateSpot from "../CreateSpot";
 import { NavLink } from "react-router-dom";
-import SpotIndexItem from "../Spots/SingleSpotIndex";
 import './ManageSpot.css';
 
 export default function ManageSpots() {
@@ -17,6 +15,10 @@ export default function ManageSpots() {
             userSpots.push(obj)
         }
     }
+
+    useEffect(() => {
+        dispatch(getUserSpots())
+    }, [dispatch])
     
     return (
         <div className="spots__container">
@@ -30,7 +32,7 @@ export default function ManageSpots() {
         </div>
         <div className="spots-container">
         {userSpots.map(spot => (
-                <div className="spot-tile">
+                <div className="spot-tile" key={spot.id}>
                     <ul className="spot-ul">
                         <li>
                             <img src={spot.previewImage} alt='demo-image' className="image"></img>
@@ -48,7 +50,7 @@ export default function ManageSpots() {
                                 ${Number(spot.price).toFixed(2)}
                             </li>
                             <li>
-                                <button>Update</button>
+                                <NavLink to={`/spots/${spot.id}/edit`}>Update</NavLink>
                                 <button>Delete</button>
                             </li>
                         </div>

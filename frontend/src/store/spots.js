@@ -4,6 +4,14 @@ const GET_SPOTS = 'spots/all';
 const GET_SINGLE_SPOT = 'spot/spotId';
 const ADD_SPOT = 'spots/add';
 const USER_SPOTS = 'user/spots'
+const EDIT_SPOT = 'spot/edit'
+
+export const editSpot = (spot) => {
+    return {
+        type: EDIT_SPOT,
+        spot
+    }
+}
 
 export const getSpots = (spots) => {
     return {
@@ -33,12 +41,32 @@ export const userSpots = (spots) => {
     }
 }
 
-export const getUserSpots = () => async(dispatch) => {
-    const response = await csrfFetch('api/spots/current');
+export const editUserSpot = (spot, spotId) => async(dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(spot)
+    })
+
     if (response.ok) {
-        const spots = response.json();
-        dispatch(userSpots(spots));
-        return spots
+        const spot = await response.json();
+        const normalizedData = {};
+        normalizedData[spot.id] = spot;
+        dispatch(editSpot(normalizedData))
+        return normalizedData
+    }
+}
+
+export const getUserSpots = () => async(dispatch) => {
+    const response = await csrfFetch('/api/spots/current');
+    if (response.ok) {
+        const spots = await response.json();
+        const normalizedData = {};
+        spots.Spots.forEach(item => normalizedData[item.id] = item)
+        dispatch(userSpots(normalizedData));
+        return normalizedData
     }
 }
 
@@ -114,6 +142,9 @@ const initialState = { allSpots: {}, singleSpot: {}, userSpots: {} };
 
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case EDIT_SPOT:
+            console.log('action passed into reducer',action)
+            return {...state, userSpots: {...state.userSpots, ...action.spot }, singleSpot: {...state.singleSpot, ...action.spot}, allSpots: {...state.allSpots, ...action.spot} }
         case USER_SPOTS:
             return {...state, userSpots: {...state.userSpots, ...action.spots}}
         case ADD_SPOT:
