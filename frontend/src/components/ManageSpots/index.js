@@ -1,19 +1,26 @@
 import React, { useEffect } from "react";
 import { getUserSpots } from "../../store/spots";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+import OpenModalButton from '../OpenModalButton';
+import DeleteSpot from '../DeleteSpot';
 import './ManageSpot.css';
 
 export default function ManageSpots() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const user = useSelector(state => state.session.user)
-    const spotsObj = useSelector(state => state.spots.allSpots)
+    const spotsObj = useSelector(state => state.spots.userSpots)
     const spotsArr = Object.values(spotsObj)
     const userSpots = [];
     for (let obj of spotsArr) {
         if (obj.ownerId === user.id) {
             userSpots.push(obj)
         }
+    }
+    
+    const handleClick = (spotId) => {
+        history.push(`/spots/${spotId}`)
     }
 
     useEffect(() => {
@@ -32,7 +39,8 @@ export default function ManageSpots() {
         </div>
         <div className="spots-container">
         {userSpots.map(spot => (
-                <div className="spot-tile" key={spot.id}>
+            <div className="tile/button__separator">
+                <div className="spot-tile" key={spot.id} onClick={() => handleClick(spot.id)}>
                     <ul className="spot-ul">
                         <li>
                             <img src={spot.previewImage} alt='demo-image' className="image"></img>
@@ -46,16 +54,26 @@ export default function ManageSpots() {
                             </li>
                         </div>
                         <div className='spot__text__row2'>
-                            <li className='spot-price'>
-                                ${Number(spot.price).toFixed(2)}
-                            </li>
-                            <li>
-                                <NavLink to={`/spots/${spot.id}/edit`}>Update</NavLink>
-                                <button>Delete</button>
-                            </li>
+                            <div className="price__container">
+                                <li className='spot-price'>
+                                    ${Number(spot.price).toFixed(2)}
+                                </li>
+                            </div>
                         </div>
                     </ul>
                 </div>
+                <div className="button__container">
+                    <li>
+                        <NavLink className='edit' to={`/spots/${spot.id}/edit`}>Update</NavLink>
+                    </li>
+                    <li className='delete'>
+                        <OpenModalButton
+                            itemText='Delete' 
+                            modalComponent={<DeleteSpot spotId={spot.id} />}
+                        />
+                    </li>
+                </div>
+            </div>
             ))}
         </div>
         </div>

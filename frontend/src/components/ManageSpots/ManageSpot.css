@@ -30,13 +30,14 @@
 .spot-price {
     font-size:14pt;
     font-weight: bold;
+    
 }
 
-.spot__text__row2 p {
+.spot__text__row2 {
     position: relative;
-    bottom: 41px;
-    left: 65px;
+    
     font-size: 14pt;
+    width: 30%;
 }
 
 .spots-container {
@@ -52,3 +53,17 @@
     box-sizing: border-box;
     padding: 5px;
 }
+
+.button__container {
+    list-style: none;
+    position: relative;
+}
+
+.delete {
+    font-size: 14pt;
+}
+
+.price__container {
+    width: 40%;
+}
+

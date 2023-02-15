@@ -3,8 +3,16 @@ import { csrfFetch } from "./csrf";
 const GET_SPOTS = 'spots/all';
 const GET_SINGLE_SPOT = 'spot/spotId';
 const ADD_SPOT = 'spots/add';
-const USER_SPOTS = 'user/spots'
-const EDIT_SPOT = 'spot/edit'
+const USER_SPOTS = 'user/spots';
+const EDIT_SPOT = 'spot/edit';
+const DELETE_SPOT = 'spot/delete';
+
+export const deleteSpot = (spotId) => {
+    return {
+        type: DELETE_SPOT,
+        spotId
+    }
+}
 
 export const editSpot = (spot) => {
     return {
@@ -38,6 +46,19 @@ export const userSpots = (spots) => {
     return {
         type: USER_SPOTS,
         spots
+    }
+}
+
+export const deleteUserSpot = (spotId) => async(dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    if (response.ok) {
+        dispatch(deleteSpot(spotId));
     }
 }
 
@@ -142,8 +163,12 @@ const initialState = { allSpots: {}, singleSpot: {}, userSpots: {} };
 
 const spotsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case DELETE_SPOT:
+            const deleteState = {...state, allSpots: {...state.allSpots }, userSpots: {...state.userSpots } }
+            delete deleteState.allSpots[action.spotId];
+            delete deleteState.userSpots[action.spotId]
+            return deleteState;
         case EDIT_SPOT:
-            console.log('action passed into reducer',action)
             return {...state, userSpots: {...state.userSpots, ...action.spot }, singleSpot: {...state.singleSpot, ...action.spot}, allSpots: {...state.allSpots, ...action.spot} }
         case USER_SPOTS:
             return {...state, userSpots: {...state.userSpots, ...action.spots}}
