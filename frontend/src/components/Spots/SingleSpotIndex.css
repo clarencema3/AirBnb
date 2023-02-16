@@ -114,3 +114,10 @@
     box-sizing: border-box;
 }
 
+.dot {
+    font-size: 14pt;
+    position: relative;
+    left: 25px;
+    top: 5px;
+}
+

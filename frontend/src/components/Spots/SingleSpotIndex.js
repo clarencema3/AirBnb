@@ -53,7 +53,13 @@ export default function SingleSpotIndex() {
                         <p className="price">${spotObj.price.toFixed(2)}</p>
                         <p className="night">night</p>
                         <p className="stars"><i className="fa-solid fa-star"></i> {spotObj.avgStarRating === 0 ? 'New' : spotObj.avgStarRating.toFixed(1)}</p>
-                        <p className="reviews">{spotObj.numReviews === 0 ? '' : `${spotObj.numReviews} review(s)`} </p>
+                        <p className="dot">{spotObj.numReviews === 0 ? '' : '.'}</p>
+                        <p className="reviews">
+                            {spotObj.numReviews === 0 ? '' : 
+                             spotObj.numReviews === 1 ? `${spotObj.numReviews} review` :
+                             `${spotObj.numReviews} reviews`
+                            } 
+                        </p>
                     </div>
                     <div className="reserve__button__container">
                         <button onClick={showMessage} className="reserve__button">Reserve</button>
