@@ -34,6 +34,8 @@
     display: inline;
     height: 40px;
     width: 40px;
+    position: relative;
+    top: 10px;
 }
 
 .right-nav {

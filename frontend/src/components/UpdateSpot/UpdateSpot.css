@@ -1,0 +1,8 @@
+.update__form__container {
+    display: flex;
+    justify-content: center;
+}
+
+.update__form__contents {
+    flex-basis: 33.33%;
+}
