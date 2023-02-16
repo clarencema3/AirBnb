@@ -177,7 +177,7 @@ const spotsReducer = (state = initialState, action) => {
             return {...state, userSpots: {...state.userSpots, ...action.spots}}
         case ADD_SPOT:
             const newState = {...state, allSpots: {...state.allSpots, ...action.spot}, singleSpot: {...state.spot, ...action.spot} }
-            newState.allSpots['previewImage'] = newState.allSpots.SpotImages[0].url;
+            newState.allSpots['previewImage'] = action.allSpots.SpotImages[0].url;
             delete newState.allSpots.SpotImages
             return newState
         case GET_SINGLE_SPOT:

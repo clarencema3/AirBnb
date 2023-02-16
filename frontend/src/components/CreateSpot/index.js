@@ -25,7 +25,7 @@ function CreateSpot() {
     
 
     function isImage(url) {
-        return /\.(jpg|jpeg|png)$/.test(url);
+        return /(.*)(\.png|.jpg|.jpeg)/.test(url);
     }
 
     const validate = () => {
@@ -38,10 +38,12 @@ function CreateSpot() {
         if (!title) errors.title = 'Name is required';
         if (!price) errors.price = 'Price is required';
         if (!previewImg) errors.previewImg = 'Preview image is required'
-        if (isImage(previewImg) === false || 
-        isImage(img2) === false || 
-        isImage(img3) === false || isImage(img4) || 
-        isImage(img5)) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
+        if (isImage(previewImg) === false) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
+        if (img2 && isImage(img2) === false ||
+            img3 && isImage(img3) === false||
+            img4 && isImage(img4) === false||
+            img5 && isImage(img5) === false
+        ) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
         setValidations(errors);
     }
     

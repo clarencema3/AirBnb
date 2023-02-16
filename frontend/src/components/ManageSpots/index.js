@@ -40,7 +40,7 @@ export default function ManageSpots() {
         </div>
         <div className="spots-container">
         {userSpots.map(spot => (
-            <div className="tileButton__separator">
+            <div key={spot.id} className="tileButton__separator">
                 <div className="spot-tile" key={spot.id}>
                     <ul className="spot-ul" onClick={() => handleClick(spot.id)}>
                         <li>
@@ -65,7 +65,7 @@ export default function ManageSpots() {
                 </div>
                 <div className="button__container">
                     <li>
-                        <NavLink className='edit' to={`/spots/${spot.id}/edit`}>Update</NavLink>
+                        <NavLink className='edit' to={`/spots/${spot.id}/edit`}>Update</NavLink>     
                     </li>
                     <div className='delete'>
                         <OpenModalButton
