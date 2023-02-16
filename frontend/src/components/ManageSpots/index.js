@@ -5,6 +5,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import OpenModalButton from '../OpenModalButton';
 import DeleteSpot from '../DeleteSpot';
 import './ManageSpot.css';
+import UpdateSpot from '../UpdateSpot'
 
 export default function ManageSpots() {
     const dispatch = useDispatch();
@@ -19,7 +20,6 @@ export default function ManageSpots() {
         }
     }
     
-
     const handleClick = (spotId) => {
         history.push(`/spots/${spotId}`)
     }
@@ -31,7 +31,7 @@ export default function ManageSpots() {
     return (
         <div className="spots__container">
             <div className="top__container">
-                <div className="title__container">
+                <div className="manage__title__container">
                     <p className="title">Manage Spots</p>
                 </div>
                 <div className="create__container">

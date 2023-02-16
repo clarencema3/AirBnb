@@ -2,6 +2,7 @@ import React from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { deleteUserSpot } from "../../store/spots";
+import './DeleteSpot.css';
 
 export default function DeleteSpot ({ spotId }) {
     const dispatch = useDispatch();
@@ -14,18 +15,18 @@ export default function DeleteSpot ({ spotId }) {
     }
 
     return (
-        <div className="modal__container">
-            <div className="title__container">
-                <p className="title">Confirm Delete</p>
+        <div className="delete__modal__container">
+            <div className="delete__title__container">
+                <p className="delete__title">Confirm Delete</p>
             </div>
-            <div className="question__container">
-                <p className="question">Are you sure you want to remove this spot from the listings?</p>
+            <div className="delete__question__container">
+                <p className="delete__question">Are you sure you want to remove this spot from the listings?</p>
             </div>
-            <div className="confirm__container">
-                <button onClick={confirm} className="confirm">Yes (Delete Spot)</button>
+            <div className="delete__button__container">
+                <button onClick={confirm} className="delete__button">Yes (Delete Spot)</button>
             </div>
-            <div className="deny__container">
-                <button onClick={closeModal} className="deny">No (Keep Spot)</button>
+            <div className="delete__button__container">
+                <button onClick={closeModal} className="deny__button">No (Keep Spot)</button>
             </div>
         </div>
     )

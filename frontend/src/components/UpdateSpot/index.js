@@ -7,9 +7,9 @@ import './UpdateSpot.css';
 export default function EditSpot() {
     const history = useHistory();
     const dispatch = useDispatch();
-
     const { spotId } = useParams();
-    const spots = useSelector(state => state.spots.userSpots)  
+    const user = useSelector(state => state.session.user);
+    const spots = useSelector(state => state.spots.userSpots); 
     let targetSpot = spots[spotId];
 
     const [country, setCountry] = useState(targetSpot.country);
@@ -57,7 +57,6 @@ export default function EditSpot() {
         setValidations(errors);
     }, [country, address, city, state, description, title, price])
     
-
     return (
         <form className='update__form__container' onSubmit={onSubmit}>
             <div className='update__form__contents'>
