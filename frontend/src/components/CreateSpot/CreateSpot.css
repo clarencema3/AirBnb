@@ -1,0 +1,210 @@
+.form__container {
+    display: flex;
+    justify-content: center;
+    height: 1500px;
+}
+
+.form__contents {
+    flex-basis: 33.33%;
+}
+
+.title {
+    font-size: 24pt;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.header {
+    font-size: 18pt;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 14pt;
+    margin: 5px;
+}
+
+.country__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.address__container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.state__label {
+    box-sizing: border-box;
+}
+
+.city__label__div {
+    width: 60%;
+}
+
+.state__label__div {
+    width: 40%;
+}
+
+.location__label__container {
+    width: 100%;
+    display: flex;
+    
+}
+
+.location__input__container {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.city__input {
+    height: 50%;
+    width: 55%;
+}
+
+.comma {
+    font-size: 14pt;
+    position: relative;
+    bottom: 15px;
+}
+
+.state__input {
+    width: 40%;
+    height: 50%;
+}
+
+.coordinate__label__container {
+    position: relative;
+    bottom: 25px;
+}
+
+.lng__label {
+    position: relative;
+    left: 140px;
+}
+
+.coordinate__input__container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    bottom: 20px;
+    gap: 5px;
+    border-bottom: 2px solid black;
+}
+
+.latitude__input {
+    height: 50%;
+}
+
+.longitude__input {
+    height: 50%;
+}
+
+.description__input {
+    height: 100px;
+    width: 100%;
+}
+
+.description__container {
+    margin-bottom: 10px;
+}
+.title__container {
+    border-top: 2px solid black;
+}
+
+.title__input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.title__input__container {
+    border-bottom: 2px solid black;
+}
+
+.price__description {
+    width: 100%;
+}
+
+.header-price {
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.description-price {
+    font-size: 14pt;
+}
+
+.price__input__container {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.sign {
+    font-size: 14pt;
+}
+
+.price__input {
+    width: 100%;
+}
+
+.formprice__container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.price__input {
+    width: 100%;
+}
+
+.url__input {
+    width: 100%;
+}
+
+.url__input__container {
+    column-gap: 15px;
+}
+
+.img2 {
+    position: relative;
+    top: 5px;
+}
+
+.img3 {
+    position: relative;
+    top: 10px;
+}
+
+.img4 {
+    position: relative;
+    top: 15px;
+}
+
+.img5 {
+    position: relative;
+    top: 20px;
+}
+
+.form__button__container {
+    position: relative;
+    top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.form__create__button {
+    padding: 10px;
+    background-color: #FF5A5F;
+    color: white;
+    box-shadow: 2px 2px black;
+}
+
+.create__spot__error {
+    color:#FF5A5F;
+}

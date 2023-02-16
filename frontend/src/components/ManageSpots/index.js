@@ -19,6 +19,7 @@ export default function ManageSpots() {
         }
     }
     
+
     const handleClick = (spotId) => {
         history.push(`/spots/${spotId}`)
     }
@@ -34,14 +35,14 @@ export default function ManageSpots() {
                     <p className="title">Manage Spots</p>
                 </div>
                 <div className="create__container">
-                    <NavLink className='link' to='/spots/new'>Create a New Spot</NavLink>
+                    <NavLink className={userSpots.length ? 'hidden' : 'link'} to='/spots/new'>Create a New Spot</NavLink>
                 </div>
         </div>
         <div className="spots-container">
         {userSpots.map(spot => (
-            <div className="tile/button__separator">
-                <div className="spot-tile" key={spot.id} onClick={() => handleClick(spot.id)}>
-                    <ul className="spot-ul">
+            <div className="tileButton__separator">
+                <div className="spot-tile" key={spot.id}>
+                    <ul className="spot-ul" onClick={() => handleClick(spot.id)}>
                         <li>
                             <img src={spot.previewImage} alt='demo-image' className="image"></img>
                         </li>
@@ -66,12 +67,12 @@ export default function ManageSpots() {
                     <li>
                         <NavLink className='edit' to={`/spots/${spot.id}/edit`}>Update</NavLink>
                     </li>
-                    <li className='delete'>
+                    <div className='delete'>
                         <OpenModalButton
-                            itemText='Delete' 
+                            buttonText="Delete" 
                             modalComponent={<DeleteSpot spotId={spot.id} />}
                         />
-                    </li>
+                    </div>
                 </div>
             </div>
             ))}

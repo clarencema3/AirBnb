@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { editUserSpot } from "../../store/spots";
-
+import './UpdateSpot.css';
 
 export default function EditSpot() {
     const history = useHistory();
@@ -59,127 +59,127 @@ export default function EditSpot() {
     
 
     return (
-        <div className='form__container'>
-        <form onSubmit={onSubmit}>
-            <ul className="errors">
-                {validations.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <div className='title'>
-                <h1>Update your Spot</h1>
-            </div>
-            <div className='description'>
-                <h2>Where's your place located?</h2>
-                <p>Guests will only get your exact address once they booked a reservation.</p>
-            </div>
-            <div className='country__container'>
-                <label>
-                    Country 
-                    <input 
-                    className='country__input'
-                    type='text'
-                    value={country}
-                    onChange={e => setCountry(e.target.value)}
-                    />
-                </label>
-            </div>
-            <div className='address__container'>
-                <label>
-                    Street Address 
-                    <input
-                    className='address__input'
-                    type='text'
-                    value={address}
-                    onChange={e => setAddress(e.target.value)}
-                    />
-                </label>
-            </div>
-            <div className='location__container'>
-                <label>
-                    City 
-                    <input
-                    className='city__input'
-                    type='text'
-                    value={city}
-                    onChange={e => setCity(e.target.value)}
-                    />
-                     ,
-                </label>
-                <label>
-                    State 
-                    <input
-                    className='state__input'
-                    type='text'
-                    value={state}
-                    onChange={e => setState(e.target.value)}
-                    />
-                </label>
-            </div>
-            <div className='coordinate__container'>
-                <label>
-                    Latitude 
-                    <input
-                    className='latitude__input'
-                    type='text'
-                    value={lat}
-                    onChange={e => setLat(e.target.value)}
-                    />
-                    ,
-                </label>
-                <label>
-                    Longitude
-                    <input
-                    className='longitude__input'
-                    type='text'
-                    value={lng}
-                    onChange={e => setLng(e.target.value)}
-                    />
-                </label>
-            </div>
-            <div className='description__container'>
-                <div className='description__title'>
-                    <h2>Describe your place to guests</h2>
-                    <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
+        <form className='update__form__container' onSubmit={onSubmit}>
+            <div className='update__form__contents'>
+                <ul className="update__errors">
+                    {validations.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
+                <div className='update__form__title'>
+                    <h1>Update your Spot</h1>
                 </div>
-                <div className='description__input'>
-                    <textarea 
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
-                    ></textarea>
+                <div className='update__form__description'>
+                    <h2>Where's your place located?</h2>
+                    <p>Guests will only get your exact address once they booked a reservation.</p>
+                </div>
+                <div className='update__country__container'>
+                    <label>
+                        Country 
+                        <input 
+                        className='update__country__input'
+                        type='text'
+                        value={country}
+                        onChange={e => setCountry(e.target.value)}
+                        />
+                    </label>
+                </div>
+                <div className='update__address__container'>
+                    <label>
+                        Street Address 
+                        <input
+                        className='update__address__input'
+                        type='text'
+                        value={address}
+                        onChange={e => setAddress(e.target.value)}
+                        />
+                    </label>
+                </div>
+                <div className='update__location__container'>
+                    <label>
+                        City 
+                        <input
+                        className='update__city__input'
+                        type='text'
+                        value={city}
+                        onChange={e => setCity(e.target.value)}
+                        />
+                        ,
+                    </label>
+                    <label>
+                        State 
+                        <input
+                        className='update__state__input'
+                        type='text'
+                        value={state}
+                        onChange={e => setState(e.target.value)}
+                        />
+                    </label>
+                </div>
+                <div className='update__coordinate__container'>
+                    <label>
+                        Latitude 
+                        <input
+                        className='update__latitude__input'
+                        type='text'
+                        value={lat}
+                        onChange={e => setLat(e.target.value)}
+                        />
+                        ,
+                    </label>
+                    <label>
+                        Longitude
+                        <input
+                        className='update__longitude__input'
+                        type='text'
+                        value={lng}
+                        onChange={e => setLng(e.target.value)}
+                        />
+                    </label>
+                </div>
+                <div className='update__description__container'>
+                    <div className='update__description__title'>
+                        <h2>Describe your place to guests</h2>
+                        <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
+                    </div>
+                    <div className='update__description__input'>
+                        <textarea 
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                        ></textarea>
+                        
+                    </div>
+                </div>
+                <div className='update__title__container'>
+                    <div className='update__title__description'>
+                        <h2>Create a title for your spot</h2>
+                        <p>Catch guests' attention with a spot title that highlights what makes your place special</p>
+                    </div>
+                    <div className='update__title__input'>
+                        <input
+                        type='text'
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        />
                     
+                    </div>
                 </div>
-            </div>
-            <div className='title__container'>
-                <div className='title__description'>
-                    <h2>Create a title for your spot</h2>
-                    <p>Catch guests' attention with a spot title that highlights what makes your place special</p>
+                <div className='update__price__container'>
+                    <div className='update__price__description'>
+                        <h2>Set a base price for your spot</h2>
+                        <p>Competitive pricing can help your listing stand out and rank higher in search results</p>
+                    </div>
+                    <div className='update__price__input'>
+                        <input
+                        type='text'
+                        value={price}
+                        onChange={e => setPrice(e.target.value)}
+                        />
+                        
+                    </div>
                 </div>
-                <div className='title__input'>
-                    <input
-                    type='text'
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                    />
-                   
+                <div className='update__button__container'>
+                    <button className='update__button'>Update Spot</button>
                 </div>
-            </div>
-            <div className='price__container'>
-                <div className='price__description'>
-                    <h2>Set a base price for your spot</h2>
-                    <p>Competitive pricing can help your listing stand out and rank higher in search results</p>
-                </div>
-                <div className='price__input'>
-                    <input
-                    type='text'
-                    value={price}
-                    onChange={e => setPrice(e.target.value)}
-                    />
-                    
-                </div>
-            </div>
-            <div className='button__container'>
-                <button className='Update__button'>Update Spot</button>
             </div>
         </form>
-       </div>
     )
 }

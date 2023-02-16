@@ -15,8 +15,8 @@ export default function SpotIndexItem({ spot }) {
                 <img src={spot.previewImage} alt='demo-image' className="image"></img>
             </li>
             <div className='spot__text__row1'>
-                <li className='spot-location'>
-                    {spot.city}, {spot.state}
+                <li className='spot-name'>
+                    {spot.name}
                 </li>
                 <li className='spot-rating'>
                     <i className="fa-solid fa-star"></i> {avgRating}

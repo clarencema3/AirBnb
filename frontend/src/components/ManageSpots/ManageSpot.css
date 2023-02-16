@@ -6,7 +6,6 @@
 
 .spot-ul {
     list-style: none; 
-    flex-basis: 25%;
     box-sizing: border-box;
     padding: 10px;
     margin: 10px;
@@ -35,7 +34,6 @@
 
 .spot__text__row2 {
     position: relative;
-    
     font-size: 14pt;
     width: 30%;
 }
@@ -49,21 +47,65 @@
 .spot-tile {
     cursor: pointer;
     list-style: none;
-    flex-basis: 25%;
     box-sizing: border-box;
     padding: 5px;
 }
 
 .button__container {
     list-style: none;
-    position: relative;
+    position: absolute;
 }
 
-.delete {
+.delete > button {
     font-size: 14pt;
+    position: relative;
+    bottom: 75px;
+    left: 215px;
+    height: 31px;
+    width: 75px;
+    background-color: #999999;
+    cursor: pointer;
+    color: white;
+    box-shadow: 1.5px 1.5px black;
+}
+
+.edit {
+    position: relative;
+    bottom: 48px;
+    left: 140px;
+    text-decoration: none;
+    border: 2px solid black;
+    padding: 3px;
+    font-size: 14pt;
+    color: white;
+    background-color: #999999;
+    box-shadow: 1.5px 1.5px black;
 }
 
 .price__container {
     width: 40%;
+}
+
+.tileButton__separator {
+    flex-basis: 25%;
+}
+
+.top__container {
+    margin-left: 30px;
+}
+
+.title {
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+.link {
+    font-size: 14pt;
+    border: 2px solid black;
+    padding: 5px;
+    text-decoration: none;
+    color: white;
+    background-color: #999999;
+    box-shadow: 2px 2px black;
 }
 
