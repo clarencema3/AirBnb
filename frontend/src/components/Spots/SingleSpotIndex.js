@@ -6,6 +6,7 @@ import { getSpotReviews, getCurrentUserReviews } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
 import './SingleSpotIndex.css'
 import CreateReview from "../CreateReview";
+import DeleteReview from "../DeleteReview";
 
 export default function SingleSpotIndex() {
     const dispatch = useDispatch();
@@ -15,10 +16,7 @@ export default function SingleSpotIndex() {
     const user = useSelector(state => state.session.user);
     const images = spotObj?.SpotImages;
     const reviewsArr = Object.values(reviews);
-    const filteredReviews = reviewsArr.filter(review => review.spotId === +spotId)
-    const filteredAndSortedArr = filteredReviews.sort((a, b) => b.updatedAt - a.updatedAt)
-    console.log('current user logged in', user);
-    console.log('reviews for this spot', reviews);
+    
     let price = spotObj?.price;
     if (price) {
         price = Number(price).toFixed(2)
@@ -31,11 +29,10 @@ export default function SingleSpotIndex() {
     useEffect(() => {
         dispatch(fetchSingleSpot(spotId))
         dispatch(getSpotReviews(spotId))
-        dispatch(getCurrentUserReviews())
-    }, [dispatch, spotId])
+        
+    }, [dispatch, spotId, reviewsArr.length])
     
     if (!images) return null;
-
     //function for hiding or showing the post a review button
     const postReviewButton = () => {
         //if there is no user logged in, hide the button
@@ -44,17 +41,16 @@ export default function SingleSpotIndex() {
             //if the current user is logged in and they own the spot, hide the button
         } else if (user?.id === spotObj?.Owner?.id) {
             return true
-        } else if (user?.id === reviews?.userId) {
-            return true
-        }
+        } 
         //if the current user is logged in and they already have a review, hide the button
-        for (let review of filteredReviews) {
+        
+        for (let review of reviewsArr) {
             if (user?.id === review.User?.id) {
                 return true
             }
         }
         //if the current user is logged in and hasn't posted a review for the spot, show the button
-
+        
         return false
     }
 
@@ -135,20 +131,27 @@ export default function SingleSpotIndex() {
                 </div>
                 <div className="review__display">
                 {/* display reviews if there are any, and none if there aren't*/}
-                    {filteredAndSortedArr.length ? 
-                        filteredAndSortedArr.map(review => {
+                    {reviewsArr.length ? 
+                        reviewsArr.map(review => {
                             return (
-                                <div className="reviewer__container">
+                                <div key={review.id} className="reviewer__container">
                                     <div className="reviewer__firstName">{review.User?.firstName}</div>
                                     <div className="review__date">{review.createdAt?.substring(0, 10)}</div>
                                     <div className="review__text">{review.review}</div>
+                                    {review.userId === user.id ? 
+                                    <OpenModalButton
+                                    buttonText={'Delete'}
+                                    modalComponent={<DeleteReview reviewId={review.id} />} 
+                                    /> :
+                                    <></>
+                                    }
                                 </div>
                             )
                         }) :
                         <></>
                     }
                     {/* if the current logged in user isn't the owner and there aren't any reviews, display this*/}
-                    {user?.id !== spotObj?.Owner?.id && !filteredAndSortedArr.length ? 
+                    {user?.id !== spotObj?.Owner?.id && !reviewsArr.length ? 
                         <div className="first__review">Be the first to post a review!</div> :
                         <></>
                     }
