@@ -36,3 +36,8 @@
     left: 65px;
     font-size: 14pt;
 }
+
+.review__display {
+    display: flex;
+    flex-direction: column-reverse;
+}
