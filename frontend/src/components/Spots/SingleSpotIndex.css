@@ -38,9 +38,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    row-gap: 0px;
-    column-gap: 0px;
+    row-gap: 2px;
+    column-gap: 2px;
     margin-right: 40px;
+    margin-left: 2px;
 }
 
 .small__image {

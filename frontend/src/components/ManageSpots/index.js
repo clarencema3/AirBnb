@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getUserSpots } from "../../store/spots";
+import { fetchSpots, getUserSpots } from "../../store/spots";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import OpenModalButton from '../OpenModalButton';
@@ -19,7 +19,8 @@ export default function ManageSpots() {
             userSpots.push(obj)
         }
     }
-    
+
+
     const handleClick = (spotId) => {
         history.push(`/spots/${spotId}`)
     }
@@ -28,6 +29,8 @@ export default function ManageSpots() {
         dispatch(getUserSpots())
     }, [dispatch])
     
+    if (!user) return null;
+
     return (
         <div className="spots__container">
             <div className="top__container">

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchSingleSpot } from "../../store/spots";
-import { getSpotReviews } from "../../store/reviews";
+import { getSpotReviews, getCurrentUserReviews } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
 import './SingleSpotIndex.css'
 import CreateReview from "../CreateReview";
@@ -11,13 +11,14 @@ export default function SingleSpotIndex() {
     const dispatch = useDispatch();
     const { spotId } = useParams();
     const spotObj = useSelector(state => state.spots.singleSpot);
-    console.log('spot object from spotObj', spotObj)
     const reviews = useSelector(state => state.reviews.spot);
     const user = useSelector(state => state.session.user);
     const images = spotObj?.SpotImages;
     const reviewsArr = Object.values(reviews);
     const filteredReviews = reviewsArr.filter(review => review.spotId === +spotId)
     const filteredAndSortedArr = filteredReviews.sort((a, b) => b.updatedAt - a.updatedAt)
+    console.log('current user logged in', user);
+    console.log('reviews for this spot', reviews);
     let price = spotObj?.price;
     if (price) {
         price = Number(price).toFixed(2)
@@ -26,14 +27,15 @@ export default function SingleSpotIndex() {
     if (avgRating) {
         avgRating = Number(avgRating).toFixed(1)
     }
+
     useEffect(() => {
         dispatch(fetchSingleSpot(spotId))
         dispatch(getSpotReviews(spotId))
-    }, [dispatch])
+        dispatch(getCurrentUserReviews())
+    }, [dispatch, spotId])
     
     if (!images) return null;
 
-    
     //function for hiding or showing the post a review button
     const postReviewButton = () => {
         //if there is no user logged in, hide the button
@@ -42,7 +44,9 @@ export default function SingleSpotIndex() {
             //if the current user is logged in and they own the spot, hide the button
         } else if (user?.id === spotObj?.Owner?.id) {
             return true
-        } 
+        } else if (user?.id === reviews?.userId) {
+            return true
+        }
         //if the current user is logged in and they already have a review, hide the button
         for (let review of filteredReviews) {
             if (user?.id === review.User?.id) {
@@ -50,6 +54,7 @@ export default function SingleSpotIndex() {
             }
         }
         //if the current user is logged in and hasn't posted a review for the spot, show the button
+
         return false
     }
 
@@ -124,7 +129,7 @@ export default function SingleSpotIndex() {
                 </div>
                 <div className={postReviewButton() ? 'hideReviewButton' : 'showReviewButton'}>
                     <OpenModalButton 
-                    modalComponent={<CreateReview />}
+                    modalComponent={<CreateReview spotId={spotId}/>}
                     buttonText='Post Your Review'
                     />
                 </div>
@@ -134,8 +139,8 @@ export default function SingleSpotIndex() {
                         filteredAndSortedArr.map(review => {
                             return (
                                 <div className="reviewer__container">
-                                    <div className="reviewer__firstName">{review.User.firstName}</div>
-                                    <div className="review__date">{review.createdAt.substring(0, 10)}</div>
+                                    <div className="reviewer__firstName">{review.User?.firstName}</div>
+                                    <div className="review__date">{review.createdAt?.substring(0, 10)}</div>
                                     <div className="review__text">{review.review}</div>
                                 </div>
                             )
