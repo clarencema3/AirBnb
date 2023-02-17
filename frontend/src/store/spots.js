@@ -134,7 +134,6 @@ export const createSpot = (spot, images) => async(dispatch) => {
             }
         }
         //once we are done with the loop, we can dispatch the spot
-        console.log('spot in thunk',spot)
         dispatch(addSpot(spot))
         return spot
     }
@@ -176,11 +175,9 @@ const spotsReducer = (state = initialState, action) => {
         case USER_SPOTS:
             return {...state, userSpots: {...state.userSpots, ...action.spots}}
         case ADD_SPOT:
-            console.log('action in reducer', action)
-            const newState = {...state, allSpots: {...state.allSpots, ...action.spot}, singleSpot: {...state.spot, ...action.spot} }
-            newState.allSpots['previewImage'] = action.spot.SpotImages[0].url;
-            delete newState.allSpots.SpotImages;
-            console.log('the newstate after making new ref', newState)
+            const newState = {...state, singleSpot: {...state.spot, ...action.spot} }
+            // newState.allSpots['previewImage'] = action.spot.SpotImages[0].url;
+            // delete newState.allSpots.SpotImages;
             return newState
         case GET_SINGLE_SPOT:
             return {...state, allSpots: {...state.allSpots} ,singleSpot: {...state.spot, ...action.spot}}
