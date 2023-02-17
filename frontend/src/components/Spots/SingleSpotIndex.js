@@ -125,6 +125,7 @@ export default function SingleSpotIndex() {
                 </div>
                 <div className={postReviewButton() ? 'hideReviewButton' : 'showReviewButton'}>
                     <OpenModalButton 
+                    name='review__modal'
                     modalComponent={<CreateReview spotId={spotId}/>}
                     buttonText='Post Your Review'
                     />
@@ -139,10 +140,13 @@ export default function SingleSpotIndex() {
                                     <div className="review__date">{review.createdAt?.substring(0, 10)}</div>
                                     <div className="review__text">{review.review}</div>
                                     {review.userId === user.id ? 
-                                    <OpenModalButton
-                                    buttonText={'Delete'}
-                                    modalComponent={<DeleteReview reviewId={review.id} />} 
-                                    /> :
+                                    <div>
+                                        <OpenModalButton
+                                        name='review__modal'
+                                        buttonText={'Delete'}
+                                        modalComponent={<DeleteReview reviewId={review.id} />} 
+                                        />
+                                    </div> :
                                     <></>
                                     }
                                 </div>
