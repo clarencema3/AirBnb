@@ -6,6 +6,7 @@ import { getSpotReviews, getCurrentUserReviews } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
 import './SingleSpotIndex.css'
 import CreateReview from "../CreateReview";
+import DeleteReview from "../DeleteReview";
 
 export default function SingleSpotIndex() {
     const dispatch = useDispatch();
@@ -15,8 +16,6 @@ export default function SingleSpotIndex() {
     const user = useSelector(state => state.session.user);
     const images = spotObj?.SpotImages;
     const reviewsArr = Object.values(reviews);
-    
-    
     
     let price = spotObj?.price;
     if (price) {
@@ -31,10 +30,9 @@ export default function SingleSpotIndex() {
         dispatch(fetchSingleSpot(spotId))
         dispatch(getSpotReviews(spotId))
         
-    }, [dispatch, spotId])
+    }, [dispatch, spotId, reviewsArr.length])
     
     if (!images) return null;
-    console.log('reviews array', reviewsArr)
     //function for hiding or showing the post a review button
     const postReviewButton = () => {
         //if there is no user logged in, hide the button
@@ -48,7 +46,6 @@ export default function SingleSpotIndex() {
         
         for (let review of reviewsArr) {
             if (user?.id === review.User?.id) {
-                console.log('review in if block', review)
                 return true
             }
         }
@@ -56,7 +53,6 @@ export default function SingleSpotIndex() {
         
         return false
     }
-    console.log('invoke function', postReviewButton())
 
     function showMessage() {
         window.alert('Feature coming soon')
@@ -142,6 +138,13 @@ export default function SingleSpotIndex() {
                                     <div className="reviewer__firstName">{review.User?.firstName}</div>
                                     <div className="review__date">{review.createdAt?.substring(0, 10)}</div>
                                     <div className="review__text">{review.review}</div>
+                                    {review.userId === user.id ? 
+                                    <OpenModalButton
+                                    buttonText={'Delete'}
+                                    modalComponent={<DeleteReview reviewId={review.id} />} 
+                                    /> :
+                                    <></>
+                                    }
                                 </div>
                             )
                         }) :
