@@ -5,11 +5,13 @@ import { fetchSingleSpot } from "../../store/spots";
 import { getSpotReviews } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
 import './SingleSpotIndex.css'
+import CreateReview from "../CreateReview";
 
 export default function SingleSpotIndex() {
     const dispatch = useDispatch();
     const { spotId } = useParams();
     const spotObj = useSelector(state => state.spots.singleSpot);
+    console.log('spot object from spotObj', spotObj)
     const reviews = useSelector(state => state.reviews.spot);
     const user = useSelector(state => state.session.user);
     const images = spotObj?.SpotImages;
@@ -122,6 +124,7 @@ export default function SingleSpotIndex() {
                 </div>
                 <div className={postReviewButton() ? 'hideReviewButton' : 'showReviewButton'}>
                     <OpenModalButton 
+                    modalComponent={<CreateReview />}
                     buttonText='Post Your Review'
                     />
                 </div>
