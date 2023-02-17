@@ -27,9 +27,6 @@ export const createReview = (reviewId) => {
 }
 
 export const addReview = (review, spotId, currentUser) => async(dispatch) => {
-    console.log('review in thunk', review);
-    console.log('spotId in thunk', spotId);
-    console.log('current user in thunk', currentUser)
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         headers: {
@@ -78,9 +75,10 @@ const reviewsReducer = (state = initialState, action) => {
             return {...state, user: {...state.user, ...action.reviews }, spot: {...state.spot, ...action.reviews}}
         case ADD_REVIEW:
             console.log('action in reducer', action)
-            return {...state, spot: {...state.spot, ...action.reviewId }, user: {...state.user, ...action.reviewId } }
+            return {...state, spot: {...state.spot, ...action.reviewId } }
         case GET_REVIEWS: 
-            return {...state, spot: {...state.spot, ...action.spotId } }
+            console.log('action', action.spotId)
+            return {...state, spot: { ...action.spotId } }
         default: 
             return state;
     }
