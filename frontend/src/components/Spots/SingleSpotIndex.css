@@ -1,99 +1,136 @@
 .single__spot__container {
     width: 100vw;
+    margin: 20px;
+    margin-right: 20px;
 }
-.spot__name {
+
+.single__spot__name {
     font-size: 24pt;
     font-weight: bold;
-    margin: 40px;
 }
 
-.spot__location {
-    font-size: 14pt;
-    margin: 40px;
+.single__spot__location {
+    font-size: 18pt;
 }
 
-.spot__images__container {
-    display: flex;
+.spot__image__container {
     width: 100%;
+    display: flex;
 }
 
-.spot__images {
-    height: 412px;
+.big__image__container {
     width: 50%;
+}
+
+.big__spot__image {
+    width: 100%;
+    height: 412px;
+}
+
+.big__image {
+    height: 100%;
+    width: 100%;
     object-fit: cover;
 }
 
-.spot__images__list {
-    list-style: none;
+.small__image__container {
+    width: 50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 0px;
+    column-gap: 0px;
+    margin-right: 40px;
 }
 
-.description__price__container {
-    margin: 40px;
+.small__image {
+    width: 100%;
+    height: 205px;
+}
+
+.single__spot__textarea {
+    width: 100%;
+    margin: 0;
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
-.information {
-    display: inline;
-    width: 65%;
-    position: relative;
-    bottom: 35px;
+.single__spot__info-div {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
 }
 
-.owner {
+.single__spot__header {
     font-size: 24pt;
     font-weight: bold;
 }
 
-.description {
+.single__spot__description {
     font-size: 14pt;
-}
-
-.price__section {
-    border: 2px solid black;
-    width: fit-content;
-    height: 150px;
-    border-radius: 15px;
-}
-
-.price__info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding-right: 60px;
-    padding-left: 30px;
     box-sizing: border-box;
+    width: fit-content;
+    overflow-wrap:break-word;
+    text-overflow: ellipsis;
+}
+
+.single__spot__infoarea {
+    width: 80%;
+    
+}
+
+.border-div {
+    border: 2px solid black;
+    border-radius: 15px;
     width: 100%;
+    height: 150px;
+    padding: 5%;
+    margin-right: 50px;
+    margin-top: 10px;
+}
+
+.one__spot__details {
+    display: flex;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.spot__price-div {
+    display: flex;
+    width: 50%;
+}
+
+.spot-review-div {
+    display: flex;
+    width: 50%;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+
+.reviews {
+    font-size: 14pt;
 }
 
 .price {
     font-size: 18pt;
     font-weight: bold;
-    
+    position: relative;
+    bottom: 8px;
 }
 
 .night {
     font-size: 14pt;
-    position: relative;
-    top: 9px;
-    left: 5px;
 }
 
 .stars {
-    display: flex;
-    flex-direction: row;
     font-size: 14pt;
-    position: relative;
-    top: 9px;
-    left: 20px;
 }
 
-.reviews {
-    display: flex;
-    flex-direction: row;
+.dot {
     font-size: 14pt;
+    font-weight: bold;
     position: relative;
-    top: 9px;
-    left: 30px;
+    bottom: 3px;
 }
 
 .reserve__button__container {
@@ -108,16 +145,9 @@
     cursor: pointer;
     width: 90%;
     border: 2px solid black;
-    box-shadow: 1px 1px black;
+    box-shadow: 2px 2px black;
     background-color: #FF5A5F;
     color: white;
     box-sizing: border-box;
-}
-
-.dot {
-    font-size: 14pt;
-    position: relative;
-    left: 25px;
-    top: 5px;
 }
 

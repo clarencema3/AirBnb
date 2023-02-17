@@ -1,0 +1,52 @@
+.delete__modal__container {
+    height: 30vh;
+}
+
+.delete__title__container {
+    display: flex;
+    justify-content: center;
+}
+
+.delete__title {
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+.delete__question__container {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.delete__question {
+    font-size: 18pt;
+    margin-top: 0;
+}
+
+.delete__button__container {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.delete__button {
+    font-size: 14pt;
+    width: 100%;
+    padding: 10px;
+    background-color: #FF5A5F;
+    color: white;
+    border: 2px solid black;
+    box-shadow: 2px 2px black;
+    cursor: pointer;
+}
+
+.deny__button {
+    font-size: 14pt;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid black;
+    box-shadow: 2px 2px black;
+    cursor: pointer;
+    background-color: #999999;
+    color: white;
+}

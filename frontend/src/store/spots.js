@@ -169,12 +169,15 @@ const spotsReducer = (state = initialState, action) => {
             delete deleteState.userSpots[action.spotId]
             return deleteState;
         case EDIT_SPOT:
-            return {...state, userSpots: {...state.userSpots, ...action.spot }, singleSpot: {...state.singleSpot, ...action.spot}, allSpots: {...state.allSpots, ...action.spot} }
+            return {...state, 
+                    userSpots: {...state.userSpots, ...action.spot }, 
+                    singleSpot: {...state.singleSpot, ...action.spot}, 
+                    allSpots: {...state.allSpots, ...action.spot} }
         case USER_SPOTS:
             return {...state, userSpots: {...state.userSpots, ...action.spots}}
         case ADD_SPOT:
             const newState = {...state, allSpots: {...state.allSpots, ...action.spot}, singleSpot: {...state.spot, ...action.spot} }
-            newState.allSpots['previewImage'] = newState.allSpots.SpotImages[0].url;
+            newState.allSpots['previewImage'] = action.allSpots.SpotImages[0].url;
             delete newState.allSpots.SpotImages
             return newState
         case GET_SINGLE_SPOT:

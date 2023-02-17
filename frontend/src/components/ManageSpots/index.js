@@ -5,6 +5,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import OpenModalButton from '../OpenModalButton';
 import DeleteSpot from '../DeleteSpot';
 import './ManageSpot.css';
+import UpdateSpot from '../UpdateSpot'
 
 export default function ManageSpots() {
     const dispatch = useDispatch();
@@ -19,7 +20,6 @@ export default function ManageSpots() {
         }
     }
     
-
     const handleClick = (spotId) => {
         history.push(`/spots/${spotId}`)
     }
@@ -31,7 +31,7 @@ export default function ManageSpots() {
     return (
         <div className="spots__container">
             <div className="top__container">
-                <div className="title__container">
+                <div className="manage__title__container">
                     <p className="title">Manage Spots</p>
                 </div>
                 <div className="create__container">
@@ -40,7 +40,7 @@ export default function ManageSpots() {
         </div>
         <div className="spots-container">
         {userSpots.map(spot => (
-            <div className="tileButton__separator">
+            <div key={spot.id} className="tileButton__separator">
                 <div className="spot-tile" key={spot.id}>
                     <ul className="spot-ul" onClick={() => handleClick(spot.id)}>
                         <li>
@@ -65,7 +65,7 @@ export default function ManageSpots() {
                 </div>
                 <div className="button__container">
                     <li>
-                        <NavLink className='edit' to={`/spots/${spot.id}/edit`}>Update</NavLink>
+                        <NavLink className='edit' to={`/spots/${spot.id}/edit`}>Update</NavLink>     
                     </li>
                     <div className='delete'>
                         <OpenModalButton

@@ -22,47 +22,55 @@ export default function SingleSpotIndex() {
 
     return (
         <div className="single__spot__container">
-            <div className="spot__name">
-                {spotObj.name}
+            <div className="spot__header-div">
+                <div className="single__spot__name">
+                    {spotObj.name}
+                </div>
+                <div className="single__spot__location">
+                    {spotObj.city}, {spotObj.state}, {spotObj.country}
+                </div>
             </div>
-            <div className="spot__location">
-                {spotObj.city}, {spotObj.state}, {spotObj.country}
-            </div>
-            <div>
-                <ul className="spot__images__list">
-                    {images.map(image => {
-                        return (
-                            <li>
-                                <img className="spot__images" src={image.url}></img>
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
-            <div className="description__price__container">
-                <div className="information">
-                    <div className="owner">
-                        <p>Hosted by {spotObj.Owner.firstName} {spotObj.Owner.lastName}</p>
-                    </div>
-                    <div className="description">
-                        <p>{spotObj.description}</p>
+            <div className="spot__image__container">
+                <div className="big__image__container">
+                    <div className="big__spot__image">
+                        <img className="big__image" src={images[0].url}></img>
                     </div>
                 </div>
-                <div className="price__section">
-                    <div className="price__info">
-                        <p className="price">${spotObj.price.toFixed(2)}</p>
-                        <p className="night">night</p>
-                        <p className="stars"><i className="fa-solid fa-star"></i> {spotObj.avgStarRating === 0 ? 'New' : spotObj.avgStarRating.toFixed(1)}</p>
-                        <p className="dot">{spotObj.numReviews === 0 ? '' : '.'}</p>
-                        <p className="reviews">
-                            {spotObj.numReviews === 0 ? '' : 
-                             spotObj.numReviews === 1 ? `${spotObj.numReviews} review` :
-                             `${spotObj.numReviews} reviews`
-                            } 
-                        </p>
+                <div className="small__image__container">
+                    {images[1] && <img className="small__image" src={images[1].url}></img>}
+                    {images[2] && <img className="small__image" src={images[2].url}></img>}
+                    {images[3] && <img className="small__image" src={images[3].url}></img>}
+                    {images[4] && <img className="small__image" src={images[4].url}></img>}      
+                </div>
+            </div>
+            <div className="single__spot__info-div">
+                <div className="single__spot__textarea">
+                    <div className="single__spot__header">
+                        <p>Hosted by {spotObj.Owner.firstName} {spotObj.Owner.lastName}</p>
                     </div>
-                    <div className="reserve__button__container">
-                        <button onClick={showMessage} className="reserve__button">Reserve</button>
+                    <p className="single__spot__description">{spotObj.description}</p>
+                </div>
+                <div className="single__spot__infoarea">
+                    <div className="border-div">
+                        <div className="one__spot__details">
+                            <div className="spot__price-div">
+                                <p className="price">${spotObj.price.toFixed(2)}</p>
+                                <p className="night">night</p>
+                            </div>
+                            <div className="spot-review-div">
+                                <p className="stars"><i className="fa-solid fa-star"></i> {spotObj.avgStarRating === 0 ? 'New' : spotObj.avgStarRating.toFixed(1)}</p>
+                                <p className="dot">{spotObj.numReviews === 0 ? '' : '.'}</p>
+                                <p className="reviews">
+                                {spotObj.numReviews === 0 ? '' : 
+                                spotObj.numReviews === 1 ? `${spotObj.numReviews} review` :
+                                `${spotObj.numReviews} reviews`
+                                } 
+                                </p>
+                            </div>
+                        </div>
+                        <div className="reserve__button__container">
+                            <button onClick={showMessage} className="reserve__button">Reserve</button>
+                        </div>
                     </div>
                 </div>
             </div>
