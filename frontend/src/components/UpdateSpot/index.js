@@ -79,122 +79,145 @@ export default function EditSpot() {
     }
     
     return (
-        <form className='update__form__container' onSubmit={onSubmit}>
-            <div className='update__form__contents'>
-                <div className='update__form__title'>
-                    <h1>Update your Spot</h1>
+        <form className='form__container' onSubmit={onSubmit}>
+            <div className='form__contents'>
+                <div>
+                    <p className='title'>Update your Spot</p>
                 </div>
-                <div className='update__form__description'>
-                    <h2>Where's your place located?</h2>
-                    <p>Guests will only get your exact address once they booked a reservation.</p>
+                <div className='description__container'>
+                    <p className='header'>Where's your place located?</p>
+                    <p className='description'>Guests will only get your exact address once they booked a reservation.</p>
                 </div>
-                <div className='update__country__container'>
+                <div className='country__container'>
                     <label>
                         Country {validations.country && (<span className='create__spot__error'>{validations.country}</span>)}
-                        <input 
-                        className='update__country__input'
-                        type='text'
-                        value={country}
-                        onChange={e => setCountry(e.target.value)}
-                        />
                     </label>
+                    <input 
+                    placeholder='Country'
+                    className='country__input'
+                    type='text'
+                    value={country}
+                    onChange={e => setCountry(e.target.value)}
+                    />
                 </div>
-                <div className='update__address__container'>
+                <div className='address__container'>
                     <label>
                         Street Address {validations.address && (<span className='create__spot__error'>{validations.address}</span>)}
-                        <input
-                        className='update__address__input'
-                        type='text'
-                        value={address}
-                        onChange={e => setAddress(e.target.value)}
-                        />
                     </label>
+                    <input
+                    placeholder='Address'
+                    className='address__input'
+                    type='text'
+                    value={address}
+                    onChange={e => setAddress(e.target.value)}
+                    />
                 </div>
-                <div className='update__location__container'>
-                    <label>
-                        City {validations.city && (<span className='create__spot__error'>{validations.city}</span>)}
-                        <input
-                        className='update__city__input'
-                        type='text'
-                        value={city}
-                        onChange={e => setCity(e.target.value)}
-                        />
-                        ,
-                    </label>
-                    <label>
-                        State {validations.state && (<span className='create__spot__error'>{validations.state}</span>)}
-                        <input
-                        className='update__state__input'
-                        type='text'
-                        value={state}
-                        onChange={e => setState(e.target.value)}
-                        />
-                    </label>
-                </div>
-                <div className='update__coordinate__container'>
-                    <label>
-                        Latitude 
-                        <input
-                        className='update__latitude__input'
-                        type='text'
-                        value={lat}
-                        onChange={e => setLat(e.target.value)}
-                        />
-                        ,
-                    </label>
-                    <label>
-                        Longitude
-                        <input
-                        className='update__longitude__input'
-                        type='text'
-                        value={lng}
-                        onChange={e => setLng(e.target.value)}
-                        />
-                    </label>
-                </div>
-                <div className='update__description__container'>
-                    <div className='update__description__title'>
-                        <h2>Describe your place to guests</h2>
-                        <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
+                <div className='location__label__container'>
+                    <div className='city__label__div'>
+                        <label className='city__label'>
+                            City {validations.city && (<span className='create__spot__error'>{validations.city}</span>)}
+                        </label>
                     </div>
-                    <div className='update__description__input'>
+                    <div className='state__label__div'>
+                        <label className='state__label'>
+                            State {validations.state && (<span className='create__spot__error'>{validations.state}</span>)}
+                        </label>
+                    </div>
+                </div>
+                <div className='location__input__container'>
+                    <input
+                    placeholder='City'
+                    className='city__input'
+                    type='text'
+                    value={city}
+                    onChange={e => setCity(e.target.value)}
+                    />
+                    <p className='comma'> , </p>
+                    <input
+                    placeholder='State'
+                    className='state__input'
+                    type='text'
+                    value={state}
+                    onChange={e => setState(e.target.value)}
+                    />
+                </div>
+                <div className='coordinate__label__container'>
+                    <label className='lat__label'>
+                        Latitude 
+                    </label>
+                    <label className='lng__label'>
+                        Longitude
+                    </label>
+                </div>
+                <div className='coordinate__input__container'>
+                    <input
+                    placeholder='Latitude'
+                    className='latitude__input'
+                    type='text'
+                    value={lat}
+                    onChange={e => setLat(e.target.value)}
+                    />
+                    <p className='comma'>,</p>
+                    <input
+                    placeholder='Longitude'
+                    className='longitude__input'
+                    type='text'
+                    value={lng}
+                    onChange={e => setLng(e.target.value)}
+                    />
+                </div>
+                <div className='description__container'>
+                    <div className='description__title'>
+                        <p className='header'>Describe your place to guests</p>
+                        <p className='description'>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
+                    </div>
+                    <div>
                         <textarea 
+                        className='description__input'
+                        placeholder='Please write at least 30 characters'
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         ></textarea>
-                        {validations.description && (<span className='create__spot__error'>{validations.description}</span>)}
+                        {validations.description && (<p className='create__spot__error'>{validations.description}</p>)}
                     </div>
                 </div>
-                <div className='update__title__container'>
-                    <div className='update__title__description'>
-                        <h2>Create a title for your spot</h2>
-                        <p>Catch guests' attention with a spot title that highlights what makes your place special</p>
+                <div className='title__container'>
+                    <div className='title__description'>
+                        <p className='header'>Create a title for your spot</p>
+                        <p className='description'>Catch guests' attention with a spot title that highlights what makes your place special</p>
                     </div>
-                    <div className='update__title__input'>
+                    <div className='title__input__container'>
                         <input
+                        className='title__input'
+                        placeholder='Name of your spot'
                         type='text'
                         value={title}
                         onChange={e => setTitle(e.target.value)}
                         />
-                        {validations.title && (<span className='create__spot__error'>{validations.title}</span>)}
+                        {validations.title && (<p className='create__spot__error'>{validations.title}</p>)}
                     </div>
                 </div>
-                <div className='update__price__container'>
-                    <div className='update__price__description'>
-                        <h2>Set a base price for your spot</h2>
-                        <p>Competitive pricing can help your listing stand out and rank higher in search results</p>
+                <div className='formprice__container'>
+                    <div className='price__description'>
+                        <p className='header-price'>Set a base price for your spot</p>
+                        <p className='description-price'>Competitive pricing can help your listing stand out and rank higher in search results</p>
                     </div>
-                    <div className='update__price__input'>
+                    <div className='price__input__container'>
+                        <span className='sign'>$</span>
                         <input
+                        className='price__input'
+                        placeholder='Price per night (USD)'
                         type='text'
                         value={price}
                         onChange={e => setPrice(e.target.value)}
-                        />
-                        {validations.price && (<span className='create__spot__error'>{validations.price}</span>)}
+                        />  
+                    </div>
+                    <div>
+                        {validations.price && (<p className='create__spot__error'>{validations.price}</p>)}
                     </div>
                 </div>
-                <div className='update__button__container'>
-                    <button className='update__button'>Update Spot</button>
+                <div className='form__button__container'>
+                    <button className='form__create__button'>Create Spot</button>
                 </div>
             </div>
         </form>

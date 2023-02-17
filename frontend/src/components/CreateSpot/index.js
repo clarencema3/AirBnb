@@ -23,6 +23,7 @@ function CreateSpot() {
     const [img5, setImg5] = useState('');
     const [validations, setValidations] = useState({});
     
+
     function isImage(url) {
         return /(.*)(\.png|.jpg|.jpeg)/.test(url);
     }
