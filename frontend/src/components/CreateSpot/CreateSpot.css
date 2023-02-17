@@ -196,13 +196,15 @@
     top: 40px;
     display: flex;
     justify-content: center;
+    padding: 10px;
+    border-top: 2px solid black;
 }
 
 .form__create__button {
     padding: 10px;
     background-color: #FF5A5F;
     color: white;
-    box-shadow: 2px 2px black;
+    
 }
 
 .create__spot__error {

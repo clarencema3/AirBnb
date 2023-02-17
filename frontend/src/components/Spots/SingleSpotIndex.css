@@ -134,6 +134,8 @@
     bottom: 3px;
 }
 
+/* Put the css below after refactoring read reviews to own component */
+
 .reserve__button__container {
     display: flex;
     justify-content: center;
@@ -154,4 +156,63 @@
 
 .hideReviewButton {
     display: none;
+}
+
+.review__container {
+    margin-top: 20px;
+    border-top: 2px solid black;
+    width: 96%;
+    
+}
+
+.review__header {
+    display: flex;
+    width: 20%;
+    justify-content: space-around;
+}
+
+.review__stars {
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+.review__dot {
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+.review__numReviews {
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+.reviewer__container {
+    height: 30%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.reviewer__firstName {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.review__date {
+    font-size: 14pt;
+}
+
+.review__text {
+    font-size: 14pt;
+}
+
+.review__modal {
+    font-size: 14pt;
+    padding: 5px;
+    background-color: #999999;
+    color: white;
+    box-shadow: 2px 2px black;
 }
