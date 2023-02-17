@@ -151,3 +151,6 @@
     box-sizing: border-box;
 }
 
+.hideReviewButton {
+    display: none;
+}

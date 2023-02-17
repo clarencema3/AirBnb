@@ -143,23 +143,23 @@ router.get('/', validateQueryParams, async (req, res) => {
         spot.avgRating = Number(average[0].dataValues.avgRating);
         delete spot.Reviews;
 
-        spot.SpotImages.forEach(image => {
-            if (image.preview === true) {
-                spot.SpotImages = image.url
-            }
-            if (image.preview === false) {
-                spot.SpotImages = 'no preview available'
-            }
-        })
-
-        spot.previewImage = spot.SpotImages
+        // spot.SpotImages.forEach(image => {
+        //     if (image.preview === true) {
+        //         spot.SpotImages = image.url
+        //     }
+        //     if (image.preview === false) {
+        //         spot.SpotImages = 'no preview available'
+        //     }
+        // })
+        
+        spot.previewImage = spot.SpotImages[0].url
         delete spot.SpotImages
     }
 
     for (let i = 0; i < result.Spots.length; i++) {
         result.Spots[i] = spotsList[i]
     }
-
+    
     res.json(result)
 });
 
