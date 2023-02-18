@@ -99,10 +99,12 @@
 
 .latitude__input {
     height: 50%;
+    width: 40%;
 }
 
 .longitude__input {
     height: 50%;
+    width: 55%;
 }
 
 .description__input {
@@ -204,7 +206,7 @@
     padding: 10px;
     background-color: #FF5A5F;
     color: white;
-    
+    cursor: pointer;
 }
 
 .create__spot__error {
