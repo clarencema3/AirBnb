@@ -220,3 +220,7 @@
 .review__modal {
     cursor: pointer;
 }
+
+.first__review-text {
+    font-size: 14pt;
+}
