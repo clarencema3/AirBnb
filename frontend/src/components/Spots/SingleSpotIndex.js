@@ -16,7 +16,6 @@ export default function SingleSpotIndex() {
     const user = useSelector(state => state.session.user);
     const images = spotObj?.SpotImages;
     const reviewsArr = Object.values(reviews);
-    console.log('reviews array', reviewsArr)
     
     let price = spotObj?.price;
     if (price) {

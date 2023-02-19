@@ -56,7 +56,6 @@ export default function EditSpot() {
     const onSubmit = async (e) => {
         e.preventDefault();
         validate();
-        console.log('errors object', validations)
         if (validations.length) {
             setValidations({})
         }

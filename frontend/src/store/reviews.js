@@ -71,7 +71,6 @@ export const getCurrentUserReviews = () => async(dispatch) => {
         const userReview = await response.json();
         const normalizedData = {};
         userReview.Reviews.forEach(review => normalizedData['reviewId'] = review)
-        console.log('response in thunk', userReview)
         dispatch(getUserReviews(normalizedData))
     }
 }
@@ -92,7 +91,6 @@ const initialState = { spot: {}, user: {} }
 const reviewsReducer = (state = initialState, action) => {
     switch(action.type) {
         case DELETE_REVIEW: 
-            console.log('action in reducer', action)
             const deleteState = {...state, spot: {...state.spot}, user: {...state.user } }
             delete deleteState.spot[action.reviewId];
             delete deleteState.user[action.reviewId];
