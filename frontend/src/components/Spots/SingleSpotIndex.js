@@ -159,7 +159,9 @@ export default function SingleSpotIndex() {
                     }
                     {/* if the current logged in user isn't the owner and there aren't any reviews, display this*/}
                     {user?.id !== spotObj?.Owner?.id && !reviewsArr.length ? 
-                        <div className="first__review">Be the first to post a review!</div> :
+                        <div className="first__review__container">
+                            <p className="first__review-text">Be the first to post a review!</p>
+                        </div> :
                         <></>
                     }
                 </div>

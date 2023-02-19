@@ -12,6 +12,7 @@ export default function CreateReview ({ spotId }) {
     const { closeModal } = useModal();
     const [stars, setStars] = useState(0);
     const [reviewText, setReviewText] = useState('');
+    const [errors, setErrors] = useState([]);
 
     const handleClick = (value) => {
         setStars(value)
@@ -26,8 +27,11 @@ export default function CreateReview ({ spotId }) {
         }
 
         dispatch(addReview(newReview, spotId, currentUser))
-        dispatch(fetchSingleSpot(spotId))
-        closeModal()
+            .then(closeModal())
+            .catch(async(res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors)
+            })
     }
 
     return (
@@ -35,6 +39,13 @@ export default function CreateReview ({ spotId }) {
             <div className="create__review-header">
                 <p className="create__review-title">How was your stay?</p>
             </div>
+            <ul>
+                {errors && errors.map((err, idx) => (
+                    <li className="server-errors" key={idx}> 
+                        {err}
+                    </li>
+                ))}
+            </ul>
             <div className="create__review__text__container">
                 <textarea 
                 rows='10'
