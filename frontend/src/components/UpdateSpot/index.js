@@ -9,7 +9,9 @@ export default function EditSpot() {
     const dispatch = useDispatch();
     const { spotId } = useParams();
     const spots = useSelector(state => state.spots.userSpots); 
+    const user = useSelector(state => state.session.user)
     let targetSpot = spots[spotId];
+    if (user.id !== targetSpot?.ownerId) history.push('/')
     
     const [country, setCountry] = useState('');
     const [address, setAddress] = useState('');

@@ -216,3 +216,7 @@
     color: white;
     box-shadow: 2px 2px black;
 }
+
+.review__modal {
+    cursor: pointer;
+}

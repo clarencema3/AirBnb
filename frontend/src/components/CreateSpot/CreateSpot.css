@@ -32,10 +32,20 @@
     margin-bottom: 10px;
 }
 
+.country__input {
+    background-color: #E8F0FE;
+    border: 2px solid black;
+}
+
 .address__container {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+}
+
+.address__input {
+    background-color: #E8F0FE;
+    border: 2px solid black;
 }
 
 .state__label {
@@ -56,6 +66,7 @@
     
 }
 
+
 .location__input__container {
     display: flex;
     flex-direction: row;
@@ -65,6 +76,8 @@
 .city__input {
     height: 50%;
     width: 55%;
+    background-color: #E8F0FE;
+    border: 2px solid black;
 }
 
 .comma {
@@ -76,6 +89,8 @@
 .state__input {
     width: 40%;
     height: 50%;
+    background-color: #E8F0FE;
+    border: 2px solid black;
 }
 
 .coordinate__label__container {
@@ -99,15 +114,23 @@
 
 .latitude__input {
     height: 50%;
+    width: 40%;
+    background-color: #E8F0FE;
+    border: 2px solid black;
 }
 
 .longitude__input {
     height: 50%;
+    width: 55%;
+    background-color: #E8F0FE;
+    border: 2px solid black;
 }
 
 .description__input {
     height: 100px;
     width: 100%;
+    background-color: #E8F0FE;
+    border: 2px solid black;
 }
 
 .description__container {
@@ -120,6 +143,8 @@
 .title__input {
     width: 100%;
     margin-bottom: 10px;
+    background-color: #E8F0FE;
+    border: 2px solid black;
 }
 
 .title__input__container {
@@ -151,6 +176,8 @@
 
 .price__input {
     width: 100%;
+    background-color: #E8F0FE;
+    border: 2px solid black;
 }
 
 .formprice__container {
@@ -159,12 +186,11 @@
     width: 100%;
 }
 
-.price__input {
-    width: 100%;
-}
 
 .url__input {
     width: 100%;
+    background-color: #E8F0FE;
+    border: 2px solid black;
 }
 
 .url__input__container {
@@ -204,7 +230,7 @@
     padding: 10px;
     background-color: #FF5A5F;
     color: white;
-    
+    cursor: pointer;
 }
 
 .create__spot__error {

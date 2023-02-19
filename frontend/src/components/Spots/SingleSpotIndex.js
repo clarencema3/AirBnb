@@ -16,6 +16,7 @@ export default function SingleSpotIndex() {
     const user = useSelector(state => state.session.user);
     const images = spotObj?.SpotImages;
     const reviewsArr = Object.values(reviews);
+    console.log('reviews array', reviewsArr)
     
     let price = spotObj?.price;
     if (price) {
@@ -112,6 +113,8 @@ export default function SingleSpotIndex() {
                     </div>
                 </div>
             </div>
+            {/* Need to refactor to read reviews in separate component */}
+            {user?.id ? 
             <div className="review__container">
                 <div className="review__header">
                     <p className="review__stars"><i className="fa-solid fa-star"></i> {avgRating === 0.0 ? 'New' : avgRating}</p>
@@ -132,10 +135,10 @@ export default function SingleSpotIndex() {
                 </div>
                 <div className="review__display">
                 {/* display reviews if there are any, and none if there aren't*/}
-                    {reviewsArr.length ? 
+                    {reviewsArr && reviewsArr.length ? 
                         reviewsArr.map(review => {
                             return (
-                                <div key={review.id} className="reviewer__container">
+                                <div key={review?.id} className="reviewer__container">
                                     <div className="reviewer__firstName">{review.User?.firstName}</div>
                                     <div className="review__date">{review.createdAt?.substring(0, 10)}</div>
                                     <div className="review__text">{review.review}</div>
@@ -160,7 +163,34 @@ export default function SingleSpotIndex() {
                         <></>
                     }
                 </div>
+            </div> :
+            <div className="review__container">
+                <div className="review__header">
+                    <p className="review__stars"><i className="fa-solid fa-star"></i> {avgRating === 0.0 ? 'New' : avgRating}</p>
+                    <p className="review__dot">{spotObj?.numReviews === 0 ? '' : '·'}</p>
+                    <p className="review__numReviews">
+                    {spotObj?.numReviews === 0 ? '' : 
+                    spotObj?.numReviews === 1 ? `${spotObj?.numReviews} review` :
+                    `${spotObj?.numReviews} reviews`
+                    } 
+                    </p>
+                </div>
+                <div className="review__display">
+                    {reviewsArr && reviewsArr.length ? 
+                        reviewsArr.map(review => {
+                            return (
+                                <div className="reviewer__container">
+                                    <div className="reviewer__firstName">{review.User?.firstName}</div>
+                                    <div className="review__date">{review.createdAt?.substring(0, 10)}</div>
+                                    <div className="review__text">{review.review}</div>
+                                </div>
+                            )
+                        }) :
+                        <></>
+                    }
+                </div>
             </div>
+            }
         </div>
     )
 }

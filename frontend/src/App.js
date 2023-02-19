@@ -38,6 +38,16 @@ function App() {
           </Route>
         </Switch>
       )}
+      {!isLoaded && (
+        <Switch>
+          <Route exact path='/'>
+            <h1>Unable to retrieve spots. Please try again shortly.</h1>
+          </Route>
+          <Route path='/spots/:spotId'>
+            <h1>Unable to retrieve details. Please try again shortly.</h1>
+          </Route>
+        </Switch>
+      )}
     </>
   );
 }
