@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createSpot } from '../../store/spots';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -22,38 +22,37 @@ function CreateSpot() {
     const [img4, setImg4] = useState('');
     const [img5, setImg5] = useState('');
     const [validations, setValidations] = useState({});
-    
+    const [submitted, setSubmitted] = useState(false)
 
     function isImage(url) {
         return /(.*)(\.png|.jpg|.jpeg)/.test(url);
     }
     
-    const validate = () => {
-        const errors = {};
-        if (!country) errors.country = 'Country is required';
-        if (!address) errors.address = 'Address is required';
-        if (!city) errors.city = 'City is required';
-        if (!state) errors.state = 'State is required';
-        if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
-        if (!title) errors.title = 'Name is required';
-        if (!price) errors.price = 'Price is required';
-        if (!previewImg) errors.previewImg = 'Preview image is required'
-        if (isImage(previewImg) === false) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
-        if (img2 && isImage(img2) === false ||
-            img3 && isImage(img3) === false||
-            img4 && isImage(img4) === false||
-            img5 && isImage(img5) === false
-        ) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
-        setValidations(errors);
-    }
+    useEffect(() => {
+        const validate = () => {
+            const errors = {};
+            if (!country) errors.country = 'Country is required';
+            if (!address) errors.address = 'Address is required';
+            if (!city) errors.city = 'City is required';
+            if (!state) errors.state = 'State is required';
+            if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
+            if (!title) errors.title = 'Name is required';
+            if (!price) errors.price = 'Price is required';
+            if (!previewImg) errors.previewImg = 'Preview image is required'
+            if (isImage(previewImg) === false) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
+            if (img2 && isImage(img2) === false ||
+                img3 && isImage(img3) === false||
+                img4 && isImage(img4) === false||
+                img5 && isImage(img5) === false
+            ) errors.image = 'Image URL must end in .png, .jpg, or .jpeg';
+            setValidations(errors);
+        }
+        validate();
+    }, [country, address, city, state, description, title, price, previewImg, img2, img3, img4, img5])
     
     const onSubmit = async (e) => {
         e.preventDefault();
-        validate();
-
-        if (validations.length) {
-            setValidations({})
-        }
+        setSubmitted(true)
         
         const newSpotObj = {
             country: country,
@@ -136,7 +135,7 @@ function CreateSpot() {
                 </div>
                 <div className='country__container'>
                     <label>
-                        Country {validations.country && (<span className='create__spot__error'>{validations.country}</span>)}
+                        Country {submitted && validations.country && (<span className='create__spot__error'>{validations.country}</span>)}
                     </label>
                     <input 
                     placeholder='Country'
@@ -148,7 +147,7 @@ function CreateSpot() {
                 </div>
                 <div className='address__container'>
                     <label>
-                        Street Address {validations.address && (<span className='create__spot__error'>{validations.address}</span>)}
+                        Street Address {submitted && validations.address && (<span className='create__spot__error'>{validations.address}</span>)}
                     </label>
                     <input
                     placeholder='Address'
@@ -161,12 +160,12 @@ function CreateSpot() {
                 <div className='location__label__container'>
                     <div className='city__label__div'>
                         <label className='city__label'>
-                            City {validations.city && (<span className='create__spot__error'>{validations.city}</span>)}
+                            City {submitted && validations.city && (<span className='create__spot__error'>{validations.city}</span>)}
                         </label>
                     </div>
                     <div className='state__label__div'>
                         <label className='state__label'>
-                            State {validations.state && (<span className='create__spot__error'>{validations.state}</span>)}
+                            State {submitted && validations.state && (<span className='create__spot__error'>{validations.state}</span>)}
                         </label>
                     </div>
                 </div>
@@ -224,7 +223,7 @@ function CreateSpot() {
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         ></textarea>
-                        {validations.description && (<p className='create__spot__error'>{validations.description}</p>)}
+                        {submitted && validations.description && (<p className='create__spot__error'>{validations.description}</p>)}
                     </div>
                 </div>
                 <div className='title__container'>
@@ -240,7 +239,7 @@ function CreateSpot() {
                         value={title}
                         onChange={e => setTitle(e.target.value)}
                         />
-                        {validations.title && (<p className='create__spot__error'>{validations.title}</p>)}
+                        {submitted && validations.title && (<p className='create__spot__error'>{validations.title}</p>)}
                     </div>
                 </div>
                 <div className='formprice__container'>
@@ -259,7 +258,7 @@ function CreateSpot() {
                         />  
                     </div>
                     <div>
-                        {validations.price && (<p className='create__spot__error'>{validations.price}</p>)}
+                        {submitted && validations.price && (<p className='create__spot__error'>{validations.price}</p>)}
                     </div>
                 </div>
                 <div className='url__container'>
@@ -275,7 +274,7 @@ function CreateSpot() {
                         value={previewImg}
                         onChange={e => setPreviewImg(e.target.value)}
                         />
-                        {validations.previewImg && (<p className='create__spot__error'>{validations.previewImg}</p>)}
+                        {submitted && validations.previewImg && (<p className='create__spot__error'>{validations.previewImg}</p>)}
                     </div>
                     <div>
                         <input
@@ -285,7 +284,7 @@ function CreateSpot() {
                         value={img2}
                         onChange={e => setImg2(e.target.value)}
                         />
-                        {validations.image && (<p className='create__spot__error'>{validations.image}</p>)}
+                        {submitted && validations.image && (<p className='create__spot__error'>{validations.image}</p>)}
                     </div>
                     <div>
                         <input
