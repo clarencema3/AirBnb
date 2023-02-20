@@ -54,73 +54,77 @@ function CreateSpot() {
         e.preventDefault();
         setSubmitted(true)
         
-        const newSpotObj = {
-            country: country,
-            city: city,
-            address: address,
-            state: state,
-            lat: lat || 100,
-            lng: lng || 100,
-            description: description,
-            name: title,
-            price: price
+        if (!Object.values(validations).length) {
+            const newSpotObj = {
+                country: country,
+                city: city,
+                address: address,
+                state: state,
+                lat: lat || 100,
+                lng: lng || 100,
+                description: description,
+                name: title,
+                price: price
+            }
+    
+            const imageList = [];
+            const newImage = {
+                url: previewImg,
+                preview: true
+            }
+    
+            imageList.push(newImage)
+            if (img2) {
+                const secondImage = {
+                    url: img2,
+                    preview: false
+                }
+                imageList.push(secondImage)
+            }
+            if (img3) {
+                const secondImage = {
+                    url: img3,
+                    preview: false
+                }
+                imageList.push(secondImage)
+            }
+            if (img4) {
+                const secondImage = {
+                    url: img4,
+                    preview: false
+                }
+                imageList.push(secondImage)
+            }
+            if (img5) {
+                const secondImage = {
+                    url: img5,
+                    preview: false
+                }
+                imageList.push(secondImage)
+            }
+    
+            setPrice('');
+            setTitle('');
+            setAddress('');
+            setCity('');
+            setCountry('');
+            setState('');
+            setLat('');
+            setLng('');
+            setDescription('');
+            setPreviewImg('');
+            setImg2('');
+            setImg3('');
+            setImg4('');
+            setImg5('');
+    
+            const createdSpot = await dispatch(createSpot(newSpotObj, imageList))
+            if (createdSpot) {
+                history.push(`/spots/${createdSpot.id}`)
+            }
+
         }
 
-        const imageList = [];
-        const newImage = {
-            url: previewImg,
-            preview: true
-        }
-
-        imageList.push(newImage)
-        if (img2) {
-            const secondImage = {
-                url: img2,
-                preview: false
-            }
-            imageList.push(secondImage)
-        }
-        if (img3) {
-            const secondImage = {
-                url: img3,
-                preview: false
-            }
-            imageList.push(secondImage)
-        }
-        if (img4) {
-            const secondImage = {
-                url: img4,
-                preview: false
-            }
-            imageList.push(secondImage)
-        }
-        if (img5) {
-            const secondImage = {
-                url: img5,
-                preview: false
-            }
-            imageList.push(secondImage)
-        }
-
-        setPrice('');
-        setTitle('');
-        setAddress('');
-        setCity('');
-        setCountry('');
-        setState('');
-        setLat('');
-        setLng('');
-        setDescription('');
-        setPreviewImg('');
-        setImg2('');
-        setImg3('');
-        setImg4('');
-        setImg5('');
-
-        const createdSpot = await dispatch(createSpot(newSpotObj, imageList))
-        if (createdSpot) {
-            history.push(`/spots/${createdSpot.id}`)
-        }
     }
     
     return (
