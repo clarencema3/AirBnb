@@ -60,22 +60,24 @@ export default function EditSpot() {
     const onSubmit = async (e) => {
         e.preventDefault();
         setSubmitted(true)
-        
-        targetSpot = {
-            country: country,
-            city: city,
-            address: address,
-            state: state,
-            lat: lat || 100,
-            lng: lng || 100,
-            description: description,
-            name: title,
-            price: price
-        }
+        if (!Object.values(validations).length) {
+            targetSpot = {
+                country: country,
+                city: city,
+                address: address,
+                state: state,
+                lat: lat || 100,
+                lng: lng || 100,
+                description: description,
+                name: title,
+                price: price
+            }
+    
+            const updatedSpot = await dispatch(editUserSpot(targetSpot, spotId))
+            if (updatedSpot) {
+                history.push(`/spots/${spotId}`)
+            }
 
-        const updatedSpot = await dispatch(editUserSpot(targetSpot, spotId))
-        if (updatedSpot) {
-            history.push(`/spots/${spotId}`)
         }
         
     }
