@@ -27,7 +27,7 @@ function CreateSpot() {
     function isImage(url) {
         return /(.*)(\.png|.jpg|.jpeg)/.test(url);
     }
-
+    
     const validate = () => {
         const errors = {};
         if (!country) errors.country = 'Country is required';
