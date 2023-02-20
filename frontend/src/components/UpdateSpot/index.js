@@ -23,6 +23,7 @@ export default function EditSpot() {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [validations, setValidations] = useState({});
+    const [submitted, setSubmitted] = useState(false)
 
     useEffect(() => {
         dispatch(fetchSingleSpot(spotId));
@@ -41,24 +42,24 @@ export default function EditSpot() {
         getValues();
     }, [dispatch])
 
-    const validate = () => {
-        const errors = {};
-        if (!country) errors.country = 'Country is required';
-        if (!address) errors.address = 'Address is required';
-        if (!city) errors.city = 'City is required';
-        if (!state) errors.state = 'State is required';
-        if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
-        if (!title) errors.title = 'Name is required';
-        if (!price) errors.price = 'Price is required';
-        setValidations(errors);
-    }
+    useEffect(() => {
+        const validate = () => {
+            const errors = {};
+            if (!country) errors.country = 'Country is required';
+            if (!address) errors.address = 'Address is required';
+            if (!city) errors.city = 'City is required';
+            if (!state) errors.state = 'State is required';
+            if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
+            if (!title) errors.title = 'Name is required';
+            if (!price) errors.price = 'Price is required';
+            setValidations(errors);
+        }
+        validate();
+    }, [country, address, city, state, description, title, price])
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        validate();
-        if (validations.length) {
-            setValidations({})
-        }
+        setSubmitted(true)
         
         targetSpot = {
             country: country,
@@ -91,7 +92,7 @@ export default function EditSpot() {
                 </div>
                 <div className='country__container'>
                     <label>
-                        Country {validations.country && (<span className='create__spot__error'>{validations.country}</span>)}
+                        Country {submitted && validations.country && (<span className='create__spot__error'>{validations.country}</span>)}
                     </label>
                     <input 
                     placeholder='Country'
@@ -103,7 +104,7 @@ export default function EditSpot() {
                 </div>
                 <div className='address__container'>
                     <label>
-                        Street Address {validations.address && (<span className='create__spot__error'>{validations.address}</span>)}
+                        Street Address {submitted && validations.address && (<span className='create__spot__error'>{validations.address}</span>)}
                     </label>
                     <input
                     placeholder='Address'
@@ -116,12 +117,12 @@ export default function EditSpot() {
                 <div className='location__label__container'>
                     <div className='city__label__div'>
                         <label className='city__label'>
-                            City {validations.city && (<span className='create__spot__error'>{validations.city}</span>)}
+                            City {submitted && validations.city && (<span className='create__spot__error'>{validations.city}</span>)}
                         </label>
                     </div>
                     <div className='state__label__div'>
                         <label className='state__label'>
-                            State {validations.state && (<span className='create__spot__error'>{validations.state}</span>)}
+                            State {submitted && validations.state && (<span className='create__spot__error'>{validations.state}</span>)}
                         </label>
                     </div>
                 </div>
@@ -179,7 +180,7 @@ export default function EditSpot() {
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         ></textarea>
-                        {validations.description && (<p className='create__spot__error'>{validations.description}</p>)}
+                        {submitted && validations.description && (<p className='create__spot__error'>{validations.description}</p>)}
                     </div>
                 </div>
                 <div className='title__container'>
@@ -195,7 +196,7 @@ export default function EditSpot() {
                         value={title}
                         onChange={e => setTitle(e.target.value)}
                         />
-                        {validations.title && (<p className='create__spot__error'>{validations.title}</p>)}
+                        {submitted && validations.title && (<p className='create__spot__error'>{validations.title}</p>)}
                     </div>
                 </div>
                 <div className='formprice__container'>
@@ -214,7 +215,7 @@ export default function EditSpot() {
                         />  
                     </div>
                     <div>
-                        {validations.price && (<p className='create__spot__error'>{validations.price}</p>)}
+                        {submitted && validations.price && (<p className='create__spot__error'>{validations.price}</p>)}
                     </div>
                 </div>
                 <div className='form__button__container'>
